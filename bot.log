@@ -1,10 +1,12 @@
-2025-08-18 20:39:07,289 - __main__ - INFO - Бот в процессе запуска...
-2025-08-18 20:39:07,582 - __main__ - INFO - Бот запущен и готов к работе!
-2025-08-18 20:39:07,582 - aiogram.dispatcher - INFO - Start polling
-2025-08-18 20:39:07,678 - aiogram.dispatcher - INFO - Run polling for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
-2025-08-18 20:39:15,082 - aiogram.event - INFO - Update id=852494459 is handled. Duration 833 ms by bot id=8403782002
-2025-08-18 20:39:16,371 - aiogram.event - INFO - Update id=852494460 is handled. Duration 259 ms by bot id=8403782002
-2025-08-18 20:39:30,146 - aiogram.dispatcher - WARNING - Received SIGINT signal
-2025-08-18 20:39:30,147 - aiogram.dispatcher - INFO - Polling stopped for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
-2025-08-18 20:39:30,147 - aiogram.dispatcher - INFO - Polling stopped
-2025-08-18 20:39:30,147 - __main__ - INFO - Бот остановлен
+2025-08-18 21:05:18,514 - __main__ - INFO - Бот в процессе запуска...
+2025-08-18 21:05:18,840 - __main__ - INFO - Бот запущен и готов к работе!
+2025-08-18 21:05:18,841 - aiogram.dispatcher - INFO - Start polling
+2025-08-18 21:05:18,952 - aiogram.dispatcher - INFO - Run polling for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
+2025-08-18 21:05:21,711 - aiogram.event - INFO - Update id=852494479 is handled. Duration 455 ms by bot id=8403782002
+2025-08-18 21:05:22,941 - aiogram.event - INFO - Update id=852494480 is handled. Duration 245 ms by bot id=8403782002
+2025-08-18 21:05:33,635 - aiogram.event - INFO - Update id=852494481 is handled. Duration 223 ms by bot id=8403782002
+2025-08-18 21:05:34,992 - aiogram.event - INFO - Update id=852494482 is handled. Duration 236 ms by bot id=8403782002
+2025-08-18 21:05:45,263 - aiogram.dispatcher - WARNING - Received SIGINT signal
+2025-08-18 21:05:45,263 - aiogram.dispatcher - INFO - Polling stopped for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
+2025-08-18 21:05:45,264 - aiogram.dispatcher - INFO - Polling stopped
+2025-08-18 21:05:45,264 - __main__ - INFO - Бот остановлен

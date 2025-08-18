@@ -10,14 +10,6 @@ from keyboards.inline_kb import get_callback_btns
 user_router = Router()
 user_router.message.filter(ChatTypeFilter(['private']))
 
-
-# main_user_kb = create_kb(
-#     _("Информация"),
-#     _("Состояние текущего заказа"),
-#     _("Поддержка"),
-#     sizes=(2, 1)
-# )
-
 @user_router.message(CommandStart())
 async def cmd_start(message: types.Message) -> None:
     await message.answer("Please, choose your language",
@@ -36,6 +28,13 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
 "выполним. Со спектром наших услуг вы можете ознакомиться\n"
 "    по команде /info, но перед этим вам нужно внести некоторые данные", locale=lang)
 
+    main_user_kb = create_kb(
+        _("Информация"),
+        _("Состояние текущего заказа"),
+        _("Поддержка"),
+        sizes=(2, 1)
+    )
+
     #TODO: отправляем data в бд - инфа о пользователе
     await callback.message.delete()
-    await callback.message.answer(text)
+    await callback.message.answer(text, reply_markup=main_user_kb)
