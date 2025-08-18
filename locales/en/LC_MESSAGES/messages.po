@@ -1,0 +1,40 @@
+# English translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-08-18 10:49+0700\n"
+"PO-Revision-Date: 2025-08-18 10:49+0700\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: handlers/user_handlers.py:14
+msgid ""
+"Добро пожаловать, пользователь! Рад приветствовать тебя в нашем боте:\n"
+"    В этом боте вы можете оставить свой заказ, который мы обязательно "
+"выполним. Со спектром наших услуг вы можете ознакомиться\n"
+"    по команде /info, но перед этим вам нужно внести некоторые данные"
+msgstr "Welcome, user! Glad to welcome you to our bot:\n In this bot you can place your order, which we will definitely fulfill. You can familiarize yourself with the range of our services\n by using the /info command, but before that you need to enter some data"
+
+#: keyboards/user_kb.py:48
+msgid "Информация"
+msgstr "Information"
+
+#: keyboards/user_kb.py:49
+msgid "Состояние текущего заказа"
+msgstr "Current order status"
+
+#: keyboards/user_kb.py:50
+msgid "Поддержка"
+msgstr "Support"
+

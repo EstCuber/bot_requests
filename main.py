@@ -4,8 +4,11 @@ import logging
 
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from aiogram.utils.i18n import SimpleI18nMiddleware
 
+from handlers.user_handlers import user_router
 from config import settings, setup_logging
+from locales.engine import i18n
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -25,7 +28,11 @@ async def main() -> None:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     dp = Dispatcher()
+    dp.include_routers(
+        user_router
+    )
 
+    dp.update.middleware.register(SimpleI18nMiddleware(i18n))
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 

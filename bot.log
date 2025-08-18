@@ -1,8 +1,9 @@
-2025-08-18 07:34:43,550 - __main__ - INFO - Бот в процессе запуска...
-2025-08-18 07:34:43,843 - __main__ - INFO - Бот запущен и готов к работе!
-2025-08-18 07:34:43,844 - aiogram.dispatcher - INFO - Start polling
-2025-08-18 07:34:43,943 - aiogram.dispatcher - INFO - Run polling for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
-2025-08-18 07:34:50,828 - aiogram.dispatcher - WARNING - Received SIGINT signal
-2025-08-18 07:34:50,830 - aiogram.dispatcher - INFO - Polling stopped for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
-2025-08-18 07:34:50,830 - aiogram.dispatcher - INFO - Polling stopped
-2025-08-18 07:34:50,831 - __main__ - INFO - Бот остановлен
+2025-08-18 11:15:06,364 - __main__ - INFO - Бот в процессе запуска...
+2025-08-18 11:15:06,666 - __main__ - INFO - Бот запущен и готов к работе!
+2025-08-18 11:15:06,666 - aiogram.dispatcher - INFO - Start polling
+2025-08-18 11:15:06,764 - aiogram.dispatcher - INFO - Run polling for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
+2025-08-18 11:15:11,755 - aiogram.event - INFO - Update id=852494331 is handled. Duration 336 ms by bot id=8403782002
+2025-08-18 11:15:24,700 - aiogram.dispatcher - WARNING - Received SIGINT signal
+2025-08-18 11:15:24,700 - aiogram.dispatcher - INFO - Polling stopped for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
+2025-08-18 11:15:24,700 - aiogram.dispatcher - INFO - Polling stopped
+2025-08-18 11:15:24,701 - __main__ - INFO - Бот остановлен
