@@ -4,7 +4,7 @@ import logging
 
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.utils.i18n import SimpleI18nMiddleware
+from aiogram.utils.i18n import FSMI18nMiddleware
 
 from handlers.user_handlers import user_router
 from config import settings, setup_logging
@@ -32,7 +32,7 @@ async def main() -> None:
         user_router
     )
 
-    dp.update.middleware.register(SimpleI18nMiddleware(i18n))
+    dp.update.middleware.register(FSMI18nMiddleware(i18n))
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 
