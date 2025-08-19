@@ -1,14 +1,15 @@
 from aiogram import Router, types, F
-from aiogram.filters import CommandStart, StateFilter
+from aiogram.filters import CommandStart, StateFilter, Command, or_f
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.filters.chat_types import ChatTypeFilter
-from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import (gettext as _)
 from aiogram.utils.i18n import I18n
 from src.keyboards.user_kb import create_kb
 from src.keyboards.inline_kb import get_callback_btns
 from src.database.user_operations import add_user, add_language, get_user_by_telegram_id
+from src.filters.chat_types import LazyText as __
 
 user_router = Router()
 user_router.message.filter(ChatTypeFilter(['private']))
@@ -61,4 +62,14 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
     await callback.message.delete()
     await callback.message.answer(text, reply_markup=main_user_kb)
 
-#TODO: сделать работу с кнопками, проработать момент того что какая кнопка делает, понять работает ли перевод
+@user_router.message(or_f(Command("info"), __("Информация")))
+async def info(message: types.Message) -> None:
+    await message.answer("Здесь будет информация")
+
+@user_router.message(or_f(Command("info"), __("Состояние текущего заказа")))
+async def info(message: types.Message) -> None:
+    await message.answer("Здесь будет состояние текущего заказа")
+
+@user_router.message(or_f(Command("info"), __("Поддержка")))
+async def info(message: types.Message) -> None:
+    await message.answer("Здесь будет поддержка")
