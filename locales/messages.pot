@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-18 10:49+0700\n"
+"POT-Creation-Date: 2025-08-19 13:35+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: handlers/user_handlers.py:14
+#: handlers/user_handlers.py:33
+msgid "Добро пожаловать снова! Рады Вам снова служить!"
+msgstr ""
+
+#: handlers/user_handlers.py:35 handlers/user_handlers.py:56
+msgid "Информация"
+msgstr ""
+
+#: handlers/user_handlers.py:36 handlers/user_handlers.py:57
+msgid "Состояние текущего заказа"
+msgstr ""
+
+#: handlers/user_handlers.py:37 handlers/user_handlers.py:58
+msgid "Поддержка"
+msgstr ""
+
+#: handlers/user_handlers.py:49
 msgid ""
 "Добро пожаловать, пользователь! Рад приветствовать тебя в нашем боте:\n"
 "    В этом боте вы можете оставить свой заказ, который мы обязательно "
 "выполним. Со спектром наших услуг вы можете ознакомиться\n"
 "    по команде /info, но перед этим вам нужно внести некоторые данные"
-msgstr ""
-
-#: keyboards/user_kb.py:48
-msgid "Информация"
-msgstr ""
-
-#: keyboards/user_kb.py:49
-msgid "Состояние текущего заказа"
-msgstr ""
-
-#: keyboards/user_kb.py:50
-msgid "Поддержка"
 msgstr ""
 
