@@ -9,22 +9,34 @@ from aiogram.utils.i18n import gettext as _
 from aiogram.utils.i18n import I18n
 from keyboards.user_kb import create_kb
 from keyboards.inline_kb import get_callback_btns
-from crud.user_operations import add_user, add_language
+from crud.user_operations import add_user, add_language, get_user_by_telegram_id
 
 user_router = Router()
 user_router.message.filter(ChatTypeFilter(['private']))
 
 @user_router.message(CommandStart())
 async def cmd_start(message: types.Message, session: AsyncSession) -> None:
-    await message.answer("Please, choose your language",
-                         reply_markup=get_callback_btns(btns={"ru": "_ru",
-                                                        "eng": "_en"}))
-    await add_user(
-        session=session,
-        telegram_id=int(message.from_user.id),
-        username=message.from_user.username,
-    )
+    user = await get_user_by_telegram_id(session=session, telegram_id=int(message.from_user.id))
 
+    if getattr(user, "language", None) is None:
+
+        await message.answer("Please, choose your language",
+                             reply_markup=get_callback_btns(btns={"ru": "_ru",
+                                                            "eng": "_en"}))
+        await add_user(
+            session=session,
+            telegram_id=int(message.from_user.id),
+            username=message.from_user.username,
+        )
+
+    else:
+        text = _("Добро пожаловать снова! Рады Вам снова служить!", locale=user.language)
+        await message.answer(text=text, reply_markup=create_kb(
+        _("Информация", locale=user.language),
+        _("Состояние текущего заказа", locale=user.language),
+        _("Поддержка", locale=user.language),
+        sizes=(2, 1)
+    ))
 @user_router.callback_query(StateFilter(None), F.data.startswith("_"))
 async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I18n, session: AsyncSession) -> None:
     lang = callback.data.split("_")[-1]
@@ -49,3 +61,5 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
 
     await callback.message.delete()
     await callback.message.answer(text, reply_markup=main_user_kb)
+
+#TODO: сделать работу с кнопками, проработать момент того что какая кнопка делает, понять работает ли перевод

@@ -35,6 +35,8 @@ async def main() -> None:
         user_router
     )
 
+    #TODO: подключить мини менюшку сюда
+
     dp.update.middleware.register(DataBaseSession(session_pool=session_maker))
     dp.update.middleware.register(LanguageMiddleware(session_pool=session_maker))
     dp.update.middleware.register(FSMI18nMiddleware(i18n))
