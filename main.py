@@ -6,9 +6,12 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.utils.i18n import FSMI18nMiddleware
 
+from crud.engine import session_maker
 from handlers.user_handlers import user_router
 from config import settings, setup_logging
 from locales.engine import i18n
+from middlewares.db_session import DataBaseSession
+from middlewares.language_middleware import LanguageMiddleware
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -32,7 +35,10 @@ async def main() -> None:
         user_router
     )
 
+    dp.update.middleware.register(DataBaseSession(session_pool=session_maker))
+    dp.update.middleware.register(LanguageMiddleware(session_pool=session_maker))
     dp.update.middleware.register(FSMI18nMiddleware(i18n))
+
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 

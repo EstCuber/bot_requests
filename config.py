@@ -31,7 +31,7 @@ def setup_logging() -> None:
 class Settings(BaseSettings):
     BOT_TOKEN: str
     #ADMIN_ID: int
-    #DB_URL: str
+    DB_URL: str
     model_config = SettingsConfigDict(env_file='.env')
 
 settings = Settings()
