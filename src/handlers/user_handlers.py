@@ -63,13 +63,13 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
     await callback.message.answer(text, reply_markup=main_user_kb)
 
 @user_router.message(or_f(Command("info"), __("Информация")))
-async def info(message: types.Message) -> None:
+async def info_handler(message: types.Message) -> None:
     await message.answer("Здесь будет информация")
 
-@user_router.message(or_f(Command("info"), __("Состояние текущего заказа")))
-async def info(message: types.Message) -> None:
+@user_router.message(or_f(Command("current_order"), __("Состояние текущего заказа")))
+async def current_order_handler(message: types.Message) -> None:
     await message.answer("Здесь будет состояние текущего заказа")
 
-@user_router.message(or_f(Command("info"), __("Поддержка")))
-async def info(message: types.Message) -> None:
+@user_router.message(or_f(Command("help"), __("Поддержка")))
+async def help_handler(message: types.Message) -> None:
     await message.answer("Здесь будет поддержка")
