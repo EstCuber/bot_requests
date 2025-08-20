@@ -1,69 +1,97 @@
-2025-08-20 13:26:14,156 - src.common.polling - INFO - Бот в процессе запуска...
-2025-08-20 13:26:14,264 - src.common.polling - INFO - Бот запущен и готов к работе!
-2025-08-20 13:26:14,265 - aiogram.dispatcher - INFO - Start polling
-2025-08-20 13:26:14,360 - aiogram.dispatcher - INFO - Run polling for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
-2025-08-20 13:26:26,364 - sqlalchemy.engine.Engine - INFO - select pg_catalog.version()
-2025-08-20 13:26:26,365 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
-2025-08-20 13:26:26,365 - sqlalchemy.engine.Engine - INFO - select current_schema()
-2025-08-20 13:26:26,366 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
-2025-08-20 13:26:26,367 - sqlalchemy.engine.Engine - INFO - show standard_conforming_strings
-2025-08-20 13:26:26,367 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
-2025-08-20 13:26:26,368 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
-2025-08-20 13:26:26,372 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+2025-08-20 20:07:01,809 - src.common.polling - INFO - Бот в процессе запуска...
+2025-08-20 20:07:01,903 - src.common.polling - INFO - Бот запущен и готов к работе!
+2025-08-20 20:07:01,903 - aiogram.dispatcher - INFO - Start polling
+2025-08-20 20:07:02,002 - aiogram.dispatcher - INFO - Run polling for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
+2025-08-20 20:07:03,894 - sqlalchemy.engine.Engine - INFO - select pg_catalog.version()
+2025-08-20 20:07:03,894 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-08-20 20:07:03,895 - sqlalchemy.engine.Engine - INFO - select current_schema()
+2025-08-20 20:07:03,895 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-08-20 20:07:03,896 - sqlalchemy.engine.Engine - INFO - show standard_conforming_strings
+2025-08-20 20:07:03,896 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2025-08-20 20:07:03,897 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-08-20 20:07:03,903 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
 FROM clients 
 WHERE clients.telegram_id = $1::BIGINT
-2025-08-20 13:26:26,372 - sqlalchemy.engine.Engine - INFO - [generated in 0.00013s] (1041942398,)
-2025-08-20 13:26:26,704 - sqlalchemy.engine.Engine - INFO - ROLLBACK
-2025-08-20 13:26:26,705 - aiogram.event - INFO - Update id=852494870 is handled. Duration 352 ms by bot id=8403782002
-2025-08-20 13:26:31,202 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
-2025-08-20 13:26:31,202 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+2025-08-20 20:07:03,903 - sqlalchemy.engine.Engine - INFO - [generated in 0.00034s] (1041942398,)
+2025-08-20 20:07:03,918 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
 FROM clients 
 WHERE clients.telegram_id = $1::BIGINT
-2025-08-20 13:26:31,202 - sqlalchemy.engine.Engine - INFO - [cached since 4.829s ago] (1041942398,)
-2025-08-20 13:26:31,206 - sqlalchemy.engine.Engine - INFO - SELECT categories.category_id, categories.name, categories.description 
-FROM categories 
-WHERE categories.name = $1::VARCHAR
-2025-08-20 13:26:31,206 - sqlalchemy.engine.Engine - INFO - [generated in 0.00039s] ('Продажа какашек',)
-2025-08-20 13:26:31,373 - sqlalchemy.engine.Engine - INFO - ROLLBACK
-2025-08-20 13:26:31,374 - aiogram.event - INFO - Update id=852494871 is handled. Duration 173 ms by bot id=8403782002
-2025-08-20 13:26:36,500 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
-2025-08-20 13:26:36,501 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+2025-08-20 20:07:03,918 - sqlalchemy.engine.Engine - INFO - [cached since 0.01542s ago] (1041942398,)
+2025-08-20 20:07:03,920 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
 FROM clients 
 WHERE clients.telegram_id = $1::BIGINT
-2025-08-20 13:26:36,501 - sqlalchemy.engine.Engine - INFO - [cached since 10.13s ago] (1041942398,)
-2025-08-20 13:26:36,504 - src.handlers.admin_handlers - ERROR - Пользователь ввел неправильные данные!
-2025-08-20 13:26:36,646 - sqlalchemy.engine.Engine - INFO - ROLLBACK
-2025-08-20 13:26:36,647 - aiogram.event - INFO - Update id=852494872 is handled. Duration 147 ms by bot id=8403782002
-2025-08-20 13:26:45,677 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
-2025-08-20 13:26:45,678 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+2025-08-20 20:07:03,920 - sqlalchemy.engine.Engine - INFO - [cached since 0.01758s ago] (1041942398,)
+2025-08-20 20:07:04,279 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-08-20 20:07:04,281 - aiogram.event - INFO - Update id=852494936 is handled. Duration 406 ms by bot id=8403782002
+2025-08-20 20:07:05,641 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-08-20 20:07:05,641 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
 FROM clients 
 WHERE clients.telegram_id = $1::BIGINT
-2025-08-20 13:26:45,678 - sqlalchemy.engine.Engine - INFO - [cached since 19.3s ago] (1041942398,)
-2025-08-20 13:26:45,680 - src.handlers.admin_handlers - ERROR - Пользователь ввел неправильные данные!
-2025-08-20 13:26:45,802 - sqlalchemy.engine.Engine - INFO - ROLLBACK
-2025-08-20 13:26:45,802 - aiogram.event - INFO - Update id=852494873 is handled. Duration 125 ms by bot id=8403782002
-2025-08-20 13:26:54,549 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
-2025-08-20 13:26:54,549 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+2025-08-20 20:07:05,641 - sqlalchemy.engine.Engine - INFO - [cached since 1.739s ago] (1041942398,)
+2025-08-20 20:07:05,644 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
 FROM clients 
 WHERE clients.telegram_id = $1::BIGINT
-2025-08-20 13:26:54,549 - sqlalchemy.engine.Engine - INFO - [cached since 28.17s ago] (1041942398,)
-2025-08-20 13:26:54,551 - src.handlers.admin_handlers - ERROR - Пользователь ввел неправильные данные!
-2025-08-20 13:26:54,663 - sqlalchemy.engine.Engine - INFO - ROLLBACK
-2025-08-20 13:26:54,664 - aiogram.event - INFO - Update id=852494874 is handled. Duration 115 ms by bot id=8403782002
-2025-08-20 13:27:07,381 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
-2025-08-20 13:27:07,381 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+2025-08-20 20:07:05,644 - sqlalchemy.engine.Engine - INFO - [cached since 1.741s ago] (1041942398,)
+2025-08-20 20:07:05,649 - sqlalchemy.engine.Engine - INFO - SELECT categories.category_id, categories.name, categories.description 
+FROM categories ORDER BY categories.category_id 
+ LIMIT $1::INTEGER OFFSET $2::INTEGER
+2025-08-20 20:07:05,649 - sqlalchemy.engine.Engine - INFO - [generated in 0.00047s] (10, 0)
+2025-08-20 20:07:05,653 - sqlalchemy.engine.Engine - INFO - SELECT count(categories.category_id) AS count_1 
+FROM categories
+2025-08-20 20:07:05,653 - sqlalchemy.engine.Engine - INFO - [generated in 0.00030s] ()
+2025-08-20 20:07:05,800 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-08-20 20:07:05,801 - aiogram.event - INFO - Update id=852494937 is handled. Duration 161 ms by bot id=8403782002
+2025-08-20 20:07:13,020 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-08-20 20:07:13,020 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
 FROM clients 
 WHERE clients.telegram_id = $1::BIGINT
-2025-08-20 13:27:07,381 - sqlalchemy.engine.Engine - INFO - [cached since 41s ago] (1041942398,)
-2025-08-20 13:27:07,384 - sqlalchemy.engine.Engine - INFO - SELECT categories.category_id, categories.name, categories.description 
-FROM categories 
-WHERE categories.name = $1::VARCHAR
-2025-08-20 13:27:07,384 - sqlalchemy.engine.Engine - INFO - [cached since 36.17s ago] ('Круто',)
-2025-08-20 13:27:07,388 - sqlalchemy.engine.Engine - INFO - INSERT INTO categories (name, description) VALUES ($1::VARCHAR, $2::VARCHAR) RETURNING categories.category_id
-2025-08-20 13:27:07,388 - sqlalchemy.engine.Engine - INFO - [generated in 0.00020s] ('Круто', 'Молодежно!')
-2025-08-20 13:27:07,389 - sqlalchemy.engine.Engine - INFO - COMMIT
-2025-08-20 13:27:07,504 - aiogram.event - INFO - Update id=852494875 is handled. Duration 123 ms by bot id=8403782002
-2025-08-20 13:27:21,404 - aiogram.dispatcher - WARNING - Received SIGINT signal
-2025-08-20 13:27:21,405 - aiogram.dispatcher - INFO - Polling stopped for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
-2025-08-20 13:27:21,405 - aiogram.dispatcher - INFO - Polling stopped
-2025-08-20 13:27:21,405 - src.common.polling - INFO - Бот остановлен
+2025-08-20 20:07:13,021 - sqlalchemy.engine.Engine - INFO - [cached since 9.118s ago] (1041942398,)
+2025-08-20 20:07:13,023 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+FROM clients 
+WHERE clients.telegram_id = $1::BIGINT
+2025-08-20 20:07:13,023 - sqlalchemy.engine.Engine - INFO - [cached since 9.121s ago] (1041942398,)
+2025-08-20 20:07:13,167 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-08-20 20:07:13,168 - aiogram.event - INFO - Update id=852494938 is handled. Duration 149 ms by bot id=8403782002
+2025-08-20 20:07:21,117 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-08-20 20:07:21,118 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+FROM clients 
+WHERE clients.telegram_id = $1::BIGINT
+2025-08-20 20:07:21,118 - sqlalchemy.engine.Engine - INFO - [cached since 17.22s ago] (1041942398,)
+2025-08-20 20:07:21,120 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+FROM clients 
+WHERE clients.telegram_id = $1::BIGINT
+2025-08-20 20:07:21,120 - sqlalchemy.engine.Engine - INFO - [cached since 17.22s ago] (1041942398,)
+2025-08-20 20:07:21,344 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-08-20 20:07:21,347 - aiogram.event - INFO - Update id=852494939 is handled. Duration 230 ms by bot id=8403782002
+2025-08-20 20:07:30,783 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-08-20 20:07:30,784 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+FROM clients 
+WHERE clients.telegram_id = $1::BIGINT
+2025-08-20 20:07:30,784 - sqlalchemy.engine.Engine - INFO - [cached since 26.88s ago] (1041942398,)
+2025-08-20 20:07:30,786 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+FROM clients 
+WHERE clients.telegram_id = $1::BIGINT
+2025-08-20 20:07:30,786 - sqlalchemy.engine.Engine - INFO - [cached since 26.88s ago] (1041942398,)
+2025-08-20 20:07:30,942 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2025-08-20 20:07:30,943 - aiogram.event - INFO - Update id=852494940 is handled. Duration 160 ms by bot id=8403782002
+2025-08-20 20:07:43,764 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2025-08-20 20:07:43,764 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+FROM clients 
+WHERE clients.telegram_id = $1::BIGINT
+2025-08-20 20:07:43,765 - sqlalchemy.engine.Engine - INFO - [cached since 39.86s ago] (1041942398,)
+2025-08-20 20:07:43,767 - sqlalchemy.engine.Engine - INFO - SELECT clients.telegram_id, clients.username, clients.language, clients.role 
+FROM clients 
+WHERE clients.telegram_id = $1::BIGINT
+2025-08-20 20:07:43,767 - sqlalchemy.engine.Engine - INFO - [cached since 39.87s ago] (1041942398,)
+2025-08-20 20:07:43,771 - sqlalchemy.engine.Engine - INFO - SELECT services.service_id, services.name, services.description, services.price, services.category_id 
+FROM services 
+WHERE services.name = $1::VARCHAR AND services.category_id = $2::INTEGER
+2025-08-20 20:07:43,771 - sqlalchemy.engine.Engine - INFO - [generated in 0.00044s] ('Название', 3)
+2025-08-20 20:07:43,780 - sqlalchemy.engine.Engine - INFO - INSERT INTO services (name, description, price, category_id) VALUES ($1::VARCHAR, $2::VARCHAR, $3::INTEGER, $4::INTEGER) RETURNING services.service_id
+2025-08-20 20:07:43,780 - sqlalchemy.engine.Engine - INFO - [generated in 0.00069s] ('Название', 'Описание', 34, 3)
+2025-08-20 20:07:43,787 - sqlalchemy.engine.Engine - INFO - COMMIT
+2025-08-20 20:07:43,951 - aiogram.event - INFO - Update id=852494941 is handled. Duration 188 ms by bot id=8403782002
+2025-08-20 20:08:09,018 - aiogram.dispatcher - WARNING - Received SIGINT signal
+2025-08-20 20:08:09,019 - aiogram.dispatcher - INFO - Polling stopped for bot @BarberSHOP_Alt_Krai_bot id=8403782002 - 'Парихмахерская'
+2025-08-20 20:08:09,019 - aiogram.dispatcher - INFO - Polling stopped
+2025-08-20 20:08:09,019 - src.common.polling - INFO - Бот остановлен

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-20 13:25+0700\n"
+"POT-Creation-Date: 2025-08-20 19:40+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,49 +17,95 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: src/handlers/admin_handlers.py:39
+#: src/handlers/admin_handlers.py:42
 msgid "Админ вернулся, ура-ура!"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:41 src/handlers/admin_handlers.py:58
-#: src/handlers/admin_handlers.py:68
+#: src/handlers/admin_handlers.py:44 src/handlers/admin_handlers.py:61
+#: src/handlers/admin_handlers.py:71
 msgid "Создать категорию"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:42 src/handlers/admin_handlers.py:59
+#: src/handlers/admin_handlers.py:45 src/handlers/admin_handlers.py:62
+#: src/handlers/admin_handlers.py:105
 msgid "Создать услугу"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:43 src/handlers/admin_handlers.py:60
+#: src/handlers/admin_handlers.py:46 src/handlers/admin_handlers.py:63
 #: src/handlers/user_handlers.py:37 src/handlers/user_handlers.py:58
 #: src/handlers/user_handlers.py:73
 msgid "Поддержка"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:55
+#: src/handlers/admin_handlers.py:58
 msgid "Добро пожаловать админ, готов к работе!"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:70
+#: src/handlers/admin_handlers.py:73
 msgid ""
 "Пожалуйста, введите категорию в формате:\n"
 "Название категории | Описание категории"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:87
+#: src/handlers/admin_handlers.py:90
 msgid "Ваша категория создана, поздравляю!"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:90
+#: src/handlers/admin_handlers.py:93
 msgid "Данная категория уже существует! Введите еще раз!"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:94
+#: src/handlers/admin_handlers.py:97
 msgid "Вы неправильно указали название и описание"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:96
+#: src/handlers/admin_handlers.py:99
 msgid "Попробуйте еще раз ввести название и описание!"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:117
+#, python-brace-format
+msgid ""
+"Список доступных категорий (Страница 1/{total_pages}):\n"
+"\n"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:119
+msgid ""
+"Пожалуйста, введите сервис в формате:\n"
+"*Название | Описание | ID категории*"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:147
+#, python-brace-format
+msgid ""
+"Список доступных категорий (Страница {page_num}/{total_pages}):\n"
+"\n"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:149
+msgid ""
+"Пожалуйста, введите сервис в формате:\n"
+"Название | Описание | ID категории"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:174
+msgid "Услуга создана!"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:177
+msgid "Услуга уже создана, придумайте другую!."
+msgstr ""
+
+#: src/handlers/admin_handlers.py:181
+msgid ""
+"<b>Ошибка!</b> Пожалуйста, проверьте ввод.\n"
+"Он должен быть таким:\n"
+"<code>Название | Описание | ID категории</code>"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:186
+msgid "Произошла непредвиденная ошибка. Попробуйте снова."
 msgstr ""
 
 #: src/handlers/user_handlers.py:33

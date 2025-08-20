@@ -6,6 +6,7 @@ from aiogram.utils.i18n import I18n
 
 from src.core.settings import settings
 from src.database.admin_operations import get_admins
+from src.database.models.models import User, UserRole
 
 
 class ChatTypeFilter(Filter):
@@ -21,13 +22,13 @@ class IsAdmin(Filter):
     def __init__(self) -> None:
         pass
 
-    async def __call__(self, message: types.Message) -> bool:
+    async def __call__(self, message: types.Message, db_user: User | None) -> bool:
         if message.from_user.id == settings.ADMIN_ID:
             return True
-        elif message.from_user.id in await get_admins():
-            return True
-        else:
+        elif not db_user:
             return False
+
+        return db_user.role == UserRole.admin
 
 
 class LazyText(Filter):

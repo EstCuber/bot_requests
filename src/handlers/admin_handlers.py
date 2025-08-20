@@ -1,15 +1,18 @@
+import math
+
 from aiogram import Router, types, F
 from aiogram.filters import CommandStart, StateFilter, Command, or_f
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 import logging
 from src.core.logger import setup_logging
-from src.database.admin_operations import orm_create_category, check_category_exists
+from src.database.admin_operations import orm_create_category, check_category_exists, orm_create_service, \
+    check_service_exists, orm_pagination_category, orm_get_category_count
 from src.filters.chat_types import ChatTypeFilter, IsAdmin
 from aiogram.utils.i18n import (gettext as _)
 from aiogram.utils.i18n import I18n
 from src.keyboards.reply_kb import create_kb
-from src.keyboards.inline_kb import get_callback_btns
+from src.keyboards.inline_kb import get_callback_btns, get_pagination_keyboard
 from src.database.user_operations import add_user, add_language, get_user_by_telegram_id
 from src.filters.chat_types import LazyText as __
 from src.states.admin_state import AdminState
@@ -95,3 +98,90 @@ async def create_category_handler(message: types.Message, session: AsyncSession,
     except Exception as e:
         await message.answer(_("Попробуйте еще раз ввести название и описание!"))
 
+#TODO: продумать отдельное создание клавиатуры (создание клавиатуры которая возвращает с переводом)
+#TODO: сделать кнопку отмены создания
+
+
+@admin_router.message(StateFilter(None), or_f(Command("create_service"), __("Создать услугу")))
+async def start_create_service(message: types.Message, session: AsyncSession, state: FSMContext):
+    categories = await orm_pagination_category(session=session, limit=10, offset=0)
+
+    if not categories:
+        return
+
+    total_categories = await orm_get_category_count(session=session)
+    total_pages = math.ceil(total_categories / 10)
+
+    category_list_text = "\n".join([f"ID: {cat.category_id} - {cat.name}" for cat in categories])
+    text = (
+            _("Список доступных категорий (Страница 1/{total_pages}):\n\n") +
+            f"{category_list_text}\n\n" +
+            _("Пожалуйста, введите сервис в формате:\n*Название | Описание | Цена | ID категории*")
+    )
+
+    await message.answer(
+        text.format(total_pages=total_pages),
+        reply_markup=get_pagination_keyboard(total_pages=total_pages, current_page=1),
+    )
+
+    await state.set_state(AdminState.add_service)
+
+
+@admin_router.callback_query(StateFilter(AdminState.add_service), F.data.startswith("category_page_"))
+async def paginate_categories(callback: types.CallbackQuery, session: AsyncSession):
+
+    page_num = int(callback.data.split("_")[-1])
+    offset = (page_num - 1) * 10
+    categories = await orm_pagination_category(session=session, limit=10, offset=offset)
+
+    if not categories:
+        await callback.answer("Категории не найдены", show_alert=True)
+        return
+
+    total_categories = await orm_get_category_count(session=session)
+    total_pages = math.ceil(total_categories / 10)
+
+    category_list_text = "\n".join([f"ID: `{cat.category_id}` - {cat.name}" for cat in categories])
+
+    text = (
+            _("Список доступных категорий (Страница {page_num}/{total_pages}):\n\n") +
+            f"{category_list_text}\n\n" +
+            _("Пожалуйста, введите сервис в формате:\nНазвание | Описание | Цена | ID категории")
+    )
+
+    await callback.message.edit_text(
+        text.format(page_num=page_num, total_pages=total_pages),
+        reply_markup=get_pagination_keyboard(total_pages=total_pages, current_page=page_num),
+    )
+    await callback.answer()
+
+
+@admin_router.message(StateFilter(AdminState.add_service), F.text)
+async def create_service_handler(message: types.Message, session: AsyncSession, state: FSMContext):
+    try:
+
+        name, description, price, category_id_str = message.text.split(" | ")
+
+        name = name.strip()
+        description = description.strip()
+        category_id = int(category_id_str.strip())
+        price = int(price.strip())
+
+        data_to_create = {"name": name, "description": description, "price": price}
+
+        if not await check_service_exists(session=session, service_name=name, category_id=category_id):
+
+            await orm_create_service(session=session, data=data_to_create, category_id=category_id)
+            await message.answer(_("Услуга создана!"))
+            await state.clear()
+        else:
+            await message.answer(_("Услуга уже создана, придумайте другую!."))
+
+    except ValueError:
+        logger.error("Неправильный ввод", message.text)
+        await message.answer(_("<b>Ошибка!</b> Пожалуйста, проверьте ввод.\n"
+                               "Он должен быть таким:\n"
+                               "<code>Название | Описание | Цена | ID категории</code>"))
+    except Exception as e:
+        logger.error(f"Неизвестная ошибка при создании сервиса: {e}")
+        await message.answer(_("Произошла непредвиденная ошибка. Попробуйте снова."))
