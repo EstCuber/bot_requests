@@ -1,5 +1,10 @@
-from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
-from sqlalchemy import BigInteger
+from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase, relationship
+from sqlalchemy import BigInteger, Enum as sqlenum, ForeignKey
+from enum import Enum
+
+class UserRole(Enum):
+    user = "User"
+    admin = "Admin"
 
 class Base(DeclarativeBase):
     pass
@@ -10,5 +15,23 @@ class User(Base):
     telegram_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     username: Mapped[str] = mapped_column(nullable=False)
     language: Mapped[str] = mapped_column(nullable=True)
+    role: Mapped[UserRole] = mapped_column(sqlenum(UserRole), nullable=False, default=UserRole.user)
 
-#TODO: создать услугу или товар
+class Category(Base):
+    __tablename__ = "categories"
+
+    category_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(nullable=True)
+    services: Mapped[list["Service"]] = relationship(back_populates="category")
+
+class Service(Base):
+    __tablename__ = "services"
+
+    service_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(nullable=True)
+    price: Mapped[int] = mapped_column(nullable=True)
+
+    category_id: Mapped[int] = mapped_column(ForeignKey("categories.category_id"))
+    category: Mapped[Category] = relationship(back_populates="services")

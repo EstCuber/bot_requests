@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-19 19:41+0700\n"
+"POT-Creation-Date: 2025-08-20 19:40+0700\n"
 "PO-Revision-Date: 2025-08-18 10:49+0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -17,6 +17,103 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
+
+#: src/handlers/admin_handlers.py:42
+msgid "Админ вернулся, ура-ура!"
+msgstr "Admin returned! He-hey!"
+
+#: src/handlers/admin_handlers.py:44 src/handlers/admin_handlers.py:61
+#: src/handlers/admin_handlers.py:71
+msgid "Создать категорию"
+msgstr "Create category"
+
+#: src/handlers/admin_handlers.py:45 src/handlers/admin_handlers.py:62
+#: src/handlers/admin_handlers.py:105
+msgid "Создать услугу"
+msgstr "Create service"
+
+#: src/handlers/admin_handlers.py:46 src/handlers/admin_handlers.py:63
+#: src/handlers/user_handlers.py:37 src/handlers/user_handlers.py:58
+#: src/handlers/user_handlers.py:73
+msgid "Поддержка"
+msgstr "Support"
+
+#: src/handlers/admin_handlers.py:58
+msgid "Добро пожаловать админ, готов к работе!"
+msgstr "Welcome again, admin! Ready to work!"
+
+#: src/handlers/admin_handlers.py:73
+msgid ""
+"Пожалуйста, введите категорию в формате:\n"
+"Название категории | Описание категории"
+msgstr ""
+"Please, enter the name of category in format:\n"
+"Name of category | Description of Category"
+
+#: src/handlers/admin_handlers.py:90
+msgid "Ваша категория создана, поздравляю!"
+msgstr "Your category have created, good!"
+
+#: src/handlers/admin_handlers.py:93
+msgid "Данная категория уже существует! Введите еще раз!"
+msgstr "This category already exist!"
+
+#: src/handlers/admin_handlers.py:97
+msgid "Вы неправильно указали название и описание"
+msgstr "Wrong name and description"
+
+#: src/handlers/admin_handlers.py:99
+msgid "Попробуйте еще раз ввести название и описание!"
+msgstr "Try again write!"
+
+#: src/handlers/admin_handlers.py:117
+#, python-brace-format
+msgid ""
+"Список доступных категорий (Страница 1/{total_pages}):\n"
+"\n"
+msgstr "List of categories in use (Page 1/{total_pages}):\n"
+
+#: src/handlers/admin_handlers.py:119
+msgid ""
+"Пожалуйста, введите сервис в формате:\n"
+"*Название | Описание | ID категории*"
+msgstr ""
+"Please, enter the name of category in format:\n"
+"Name of category | Description of Category"
+
+#: src/handlers/admin_handlers.py:147
+#, python-brace-format
+msgid ""
+"Список доступных категорий (Страница {page_num}/{total_pages}):\n"
+"\n"
+msgstr "List of categories in use (Page {page_num}/{total_pages}):\n"
+
+#: src/handlers/admin_handlers.py:149
+msgid ""
+"Пожалуйста, введите сервис в формате:\n"
+"Название | Описание | ID категории"
+msgstr ""
+"Please, enter the name of category in format:\n"
+"Name of category | Description | ID category"
+
+#: src/handlers/admin_handlers.py:174
+msgid "Услуга создана!"
+msgstr "Service successfully created!"
+
+#: src/handlers/admin_handlers.py:177
+msgid "Услуга уже создана, придумайте другую!."
+msgstr "Service already created, try to think something else"
+
+#: src/handlers/admin_handlers.py:181
+msgid ""
+"<b>Ошибка!</b> Пожалуйста, проверьте ввод.\n"
+"Он должен быть таким:\n"
+"<code>Название | Описание | ID категории</code>"
+msgstr "<b>Error!</b> Please, check your write.\n<code>Name | Description | ID category<\code>"
+
+#: src/handlers/admin_handlers.py:186
+msgid "Произошла непредвиденная ошибка. Попробуйте снова."
+msgstr "Fatal error. Try again!"
 
 #: src/handlers/user_handlers.py:33
 msgid "Добро пожаловать снова! Рады Вам снова служить!"
@@ -32,11 +129,6 @@ msgstr "Information"
 msgid "Состояние текущего заказа"
 msgstr "Current order status"
 
-#: src/handlers/user_handlers.py:37 src/handlers/user_handlers.py:58
-#: src/handlers/user_handlers.py:73
-msgid "Поддержка"
-msgstr "Support"
-
 #: src/handlers/user_handlers.py:49
 msgid ""
 "Добро пожаловать, пользователь! Рад приветствовать тебя в нашем боте:\n"
@@ -48,4 +140,7 @@ msgstr ""
 " In this bot you can place your order, which we will definitely fulfill. "
 "You can familiarize yourself with the range of our services\n"
 " by using the /info command, but before that you need to enter some data"
+
+#~ msgid "Create category"
+#~ msgstr ""
 

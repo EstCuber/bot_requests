@@ -4,26 +4,18 @@ import logging
 
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
-from aiogram.utils.i18n import FSMI18nMiddleware
 
-from src.database.core.engine import session_maker
+from src.common.polling import polling
+from src.common.bot_commands import set_and_delete_commands
+from src.handlers.admin_handlers import admin_router
 from src.handlers.user_handlers import user_router
 from src.core.settings import settings
 from src.core.logger import setup_logging
-from locales.engine import i18n
-from src.middlewares.db_session import DataBaseSession
-from src.middlewares.language_middleware import LanguageMiddleware
+
+from src.middlewares.registration import registration_middlewares
 
 setup_logging()
 logger = logging.getLogger(__name__)
-
-
-async def on_startup(bot) -> None:
-    logger.info("Бот запущен и готов к работе!")
-
-
-async def on_shutdown(bot) -> None:
-    logger.info("Бот остановлен")
 
 async def main() -> None:
 
@@ -33,22 +25,13 @@ async def main() -> None:
 
     dp = Dispatcher()
     dp.include_routers(
+        admin_router,
         user_router
     )
 
-    #TODO: подключить мини менюшку сюда
-
-    dp.update.middleware.register(DataBaseSession(session_pool=session_maker))
-    dp.update.middleware.register(LanguageMiddleware(session_pool=session_maker))
-    dp.update.middleware.register(FSMI18nMiddleware(i18n))
-
-    dp.startup.register(on_startup)
-    dp.shutdown.register(on_shutdown)
-
-    logger.info("Бот в процессе запуска...")
-
-    await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+    registration_middlewares(dp)
+    await set_and_delete_commands(bot)
+    await polling(dp, bot)
 
 if __name__ == '__main__':
     try:

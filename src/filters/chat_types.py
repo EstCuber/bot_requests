@@ -4,6 +4,11 @@ from aiogram.filters import Filter
 from aiogram import types
 from aiogram.utils.i18n import I18n
 
+from src.core.settings import settings
+from src.database.admin_operations import get_admins
+from src.database.models.models import User, UserRole
+
+
 class ChatTypeFilter(Filter):
     """Фильтр для проверки типа чата:
     private, group, supergroup, channel < доступные типы"""
@@ -17,13 +22,14 @@ class IsAdmin(Filter):
     def __init__(self) -> None:
         pass
 
-    async def __call__(self, message: types.Message) -> bool:
-        """
-        TODO: продумать логику с админом, пока варианта три:
-        1. Создать словарь в main, подключив его к bot. (Вариант рабочий конечно, но не подойдет, ибо админов каждый раз придется заново назначать)
-        2. Использовать БД. Минус - создаст нагрузку на бд
-        3. Возможно, Redis? Но придется тогда почитать о том, что это такое
-        """
+    async def __call__(self, message: types.Message, db_user: User | None) -> bool:
+        if message.from_user.id == settings.ADMIN_ID:
+            return True
+        elif not db_user:
+            return False
+
+        return db_user.role == UserRole.admin
+
 
 class LazyText(Filter):
     def __init__(self, text: str, ignore_case: bool = True) -> None:
