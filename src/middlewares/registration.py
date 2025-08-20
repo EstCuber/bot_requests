@@ -1,8 +1,6 @@
-from aiogram.utils.i18n import FSMI18nMiddleware
 from locales.engine import i18n
 from src.database.core.engine import session_maker
-from src.middlewares.outer_middlewares.db_session import DataBaseSession
-from src.middlewares.outer_middlewares.language_middleware import LanguageMiddleware
+from .outer_middlewares import DataBaseSession, LanguageMiddleware, FSMI18nMiddleware
 
 
 def registration_middlewares(dp):

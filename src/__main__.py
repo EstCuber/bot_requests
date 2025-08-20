@@ -7,6 +7,7 @@ from aiogram.enums import ParseMode
 
 from src.common.polling import polling
 from src.common.bot_commands import set_and_delete_commands
+from src.handlers.admin_handlers import admin_router
 from src.handlers.user_handlers import user_router
 from src.core.settings import settings
 from src.core.logger import setup_logging
@@ -24,6 +25,7 @@ async def main() -> None:
 
     dp = Dispatcher()
     dp.include_routers(
+        admin_router,
         user_router
     )
 

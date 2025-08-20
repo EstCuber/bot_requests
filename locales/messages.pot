@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-19 19:41+0700\n"
+"POT-Creation-Date: 2025-08-20 11:03+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,28 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
+
+#: src/handlers/admin_handlers.py:34
+msgid "Админ вернулся, ура-ура!"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:36 src/handlers/admin_handlers.py:53
+msgid "Создать категорию"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:37 src/handlers/admin_handlers.py:54
+msgid "Создать услугу"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:38 src/handlers/admin_handlers.py:55
+#: src/handlers/user_handlers.py:37 src/handlers/user_handlers.py:58
+#: src/handlers/user_handlers.py:73
+msgid "Поддержка"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:50
+msgid "Добро пожаловать админ, готов к работе!"
+msgstr ""
 
 #: src/handlers/user_handlers.py:33
 msgid "Добро пожаловать снова! Рады Вам снова служить!"
@@ -29,11 +51,6 @@ msgstr ""
 #: src/handlers/user_handlers.py:36 src/handlers/user_handlers.py:57
 #: src/handlers/user_handlers.py:69
 msgid "Состояние текущего заказа"
-msgstr ""
-
-#: src/handlers/user_handlers.py:37 src/handlers/user_handlers.py:58
-#: src/handlers/user_handlers.py:73
-msgid "Поддержка"
 msgstr ""
 
 #: src/handlers/user_handlers.py:49
