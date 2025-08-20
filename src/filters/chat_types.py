@@ -24,7 +24,7 @@ class IsAdmin(Filter):
     async def __call__(self, message: types.Message) -> bool:
         if message.from_user.id == settings.ADMIN_ID:
             return True
-        elif message.from_user.id in get_admins():
+        elif message.from_user.id in await get_admins():
             return True
         else:
             return False

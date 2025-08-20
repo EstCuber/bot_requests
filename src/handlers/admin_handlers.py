@@ -2,8 +2,9 @@ from aiogram import Router, types, F
 from aiogram.filters import CommandStart, StateFilter, Command, or_f
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
-
-from src.database.admin_operations import get_admins
+import logging
+from src.core.logger import setup_logging
+from src.database.admin_operations import orm_create_category, check_category_exists
 from src.filters.chat_types import ChatTypeFilter, IsAdmin
 from aiogram.utils.i18n import (gettext as _)
 from aiogram.utils.i18n import I18n
@@ -11,6 +12,10 @@ from src.keyboards.reply_kb import create_kb
 from src.keyboards.inline_kb import get_callback_btns
 from src.database.user_operations import add_user, add_language, get_user_by_telegram_id
 from src.filters.chat_types import LazyText as __
+from src.states.admin_state import AdminState
+
+setup_logging()
+logger = logging.getLogger(__name__)
 
 admin_router = Router()
 admin_router.message.filter(IsAdmin(), ChatTypeFilter(['private']))
@@ -58,3 +63,35 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
 
     await callback.message.delete()
     await callback.message.answer(text, reply_markup=main_user_kb)
+
+
+@admin_router.message(StateFilter(None), or_f(Command("create_category"), __("Создать категорию")))
+async def create_category(message: types.Message, state: FSMContext):
+    await message.answer(_("Пожалуйста, введите категорию в формате:\n"
+                   "Название категории | Описание категории"))
+
+    await state.set_state(AdminState.add_category)
+
+@admin_router.message(StateFilter(AdminState.add_category), F.text)
+async def create_category_handler(message: types.Message, session: AsyncSession, state: FSMContext):
+
+    try:
+        name, description = message.text.split(" | ")
+        name, description = name.strip(), description.strip()
+        await state.update_data(name=name, description=description)
+
+        data = await state.get_data()
+
+        if not await check_category_exists(session=session, category_name=name):
+            await orm_create_category(session=session, data=data)
+            await message.answer(_("Ваша категория создана, поздравляю!"))
+            await state.clear()
+        else:
+            await message.answer(_("Данная категория уже существует! Введите еще раз!"))
+
+    except ValueError:
+        logger.error("Пользователь ввел неправильные данные!")
+        await message.answer(_("Вы неправильно указали название и описание"))
+    except Exception as e:
+        await message.answer(_("Попробуйте еще раз ввести название и описание!"))
+

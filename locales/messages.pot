@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-20 11:03+0700\n"
+"POT-Creation-Date: 2025-08-20 13:25+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,26 +17,49 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: src/handlers/admin_handlers.py:34
+#: src/handlers/admin_handlers.py:39
 msgid "Админ вернулся, ура-ура!"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:36 src/handlers/admin_handlers.py:53
+#: src/handlers/admin_handlers.py:41 src/handlers/admin_handlers.py:58
+#: src/handlers/admin_handlers.py:68
 msgid "Создать категорию"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:37 src/handlers/admin_handlers.py:54
+#: src/handlers/admin_handlers.py:42 src/handlers/admin_handlers.py:59
 msgid "Создать услугу"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:38 src/handlers/admin_handlers.py:55
+#: src/handlers/admin_handlers.py:43 src/handlers/admin_handlers.py:60
 #: src/handlers/user_handlers.py:37 src/handlers/user_handlers.py:58
 #: src/handlers/user_handlers.py:73
 msgid "Поддержка"
 msgstr ""
 
-#: src/handlers/admin_handlers.py:50
+#: src/handlers/admin_handlers.py:55
 msgid "Добро пожаловать админ, готов к работе!"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:70
+msgid ""
+"Пожалуйста, введите категорию в формате:\n"
+"Название категории | Описание категории"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:87
+msgid "Ваша категория создана, поздравляю!"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:90
+msgid "Данная категория уже существует! Введите еще раз!"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:94
+msgid "Вы неправильно указали название и описание"
+msgstr ""
+
+#: src/handlers/admin_handlers.py:96
+msgid "Попробуйте еще раз ввести название и описание!"
 msgstr ""
 
 #: src/handlers/user_handlers.py:33
