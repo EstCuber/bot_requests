@@ -25,6 +25,7 @@ class CRUDBaseTasks(Generic[ModelType]):
         """Get one category or service"""
         stmt = select(self.model).filter_by(**kwargs)
         result = await session.execute(stmt)
+        print(result)
         return result.scalars().first()
 
     async def exists(self, session: AsyncSession, **kwargs: Any) -> bool:

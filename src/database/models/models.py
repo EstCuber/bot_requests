@@ -24,8 +24,8 @@ class Category(Base):
     __tablename__ = "categories"
 
     category_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    category_name: Mapped[str] = mapped_column(nullable=False)
-    category_description: Mapped[str] = mapped_column(nullable=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(nullable=True)
 
     creator_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.telegram_id"))
     creator: Mapped[User] = relationship()
@@ -37,9 +37,9 @@ class Service(Base):
     __tablename__ = "services"
 
     service_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    service_name: Mapped[str] = mapped_column(nullable=False)
-    service_description: Mapped[str] = mapped_column(nullable=True)
-    service_price: Mapped[int] = mapped_column(nullable=True)
+    name: Mapped[str] = mapped_column(nullable=False)
+    description: Mapped[str] = mapped_column(nullable=True)
+    price: Mapped[int] = mapped_column(nullable=True)
 
     creator_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.telegram_id"))
     creator: Mapped[User] = relationship()

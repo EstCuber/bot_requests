@@ -5,7 +5,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import TelegramObject
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from src.database.crud.user_operations import get_user_by_telegram_id
+from src.database.crud.user_crud_operations.user_operations import get_user_by_telegram_id
 
 
 class LanguageMiddleware(BaseMiddleware):

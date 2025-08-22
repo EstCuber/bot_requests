@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-08-20 19:40+0700\n"
+"POT-Creation-Date: 2025-08-22 19:27+0700\n"
 "PO-Revision-Date: 2025-08-18 10:49+0700\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -28,7 +28,7 @@ msgid "Создать категорию"
 msgstr "Create category"
 
 #: src/handlers/admin_handlers.py:45 src/handlers/admin_handlers.py:62
-#: src/handlers/admin_handlers.py:105
+#: src/handlers/admin_handlers.py:102
 msgid "Создать услугу"
 msgstr "Create service"
 
@@ -40,7 +40,7 @@ msgstr "Support"
 
 #: src/handlers/admin_handlers.py:58
 msgid "Добро пожаловать админ, готов к работе!"
-msgstr "Welcome again, admin! Ready to work!"
+msgstr "Welcome, admin! Ready to work!"
 
 #: src/handlers/admin_handlers.py:73
 msgid ""
@@ -66,52 +66,55 @@ msgstr "Wrong name and description"
 msgid "Попробуйте еще раз ввести название и описание!"
 msgstr "Try again write!"
 
-#: src/handlers/admin_handlers.py:117
+#: src/handlers/admin_handlers.py:114
 #, python-brace-format
 msgid ""
 "Список доступных категорий (Страница 1/{total_pages}):\n"
 "\n"
 msgstr "List of categories in use (Page 1/{total_pages}):\n"
 
-#: src/handlers/admin_handlers.py:119
+#: src/handlers/admin_handlers.py:116
 msgid ""
 "Пожалуйста, введите сервис в формате:\n"
-"*Название | Описание | ID категории*"
+"*Название | Описание | Цена | ID категории*"
 msgstr ""
 "Please, enter the name of category in format:\n"
 "Name of category | Description of Category"
 
-#: src/handlers/admin_handlers.py:147
+#: src/handlers/admin_handlers.py:144
 #, python-brace-format
 msgid ""
 "Список доступных категорий (Страница {page_num}/{total_pages}):\n"
 "\n"
 msgstr "List of categories in use (Page {page_num}/{total_pages}):\n"
 
-#: src/handlers/admin_handlers.py:149
+#: src/handlers/admin_handlers.py:146
 msgid ""
 "Пожалуйста, введите сервис в формате:\n"
-"Название | Описание | ID категории"
+"Название | Описание | Цена | ID категории"
 msgstr ""
-"Please, enter the name of category in format:\n"
-"Name of category | Description | ID category"
+"Please, enter the name of service in format:\n"
+"Name of service | Description | Price | ID service"
 
-#: src/handlers/admin_handlers.py:174
+#: src/handlers/admin_handlers.py:178
 msgid "Услуга создана!"
 msgstr "Service successfully created!"
 
-#: src/handlers/admin_handlers.py:177
+#: src/handlers/admin_handlers.py:181
 msgid "Услуга уже создана, придумайте другую!."
 msgstr "Service already created, try to think something else"
 
-#: src/handlers/admin_handlers.py:181
+#: src/handlers/admin_handlers.py:185
+#, fuzzy
 msgid ""
 "<b>Ошибка!</b> Пожалуйста, проверьте ввод.\n"
 "Он должен быть таким:\n"
-"<code>Название | Описание | ID категории</code>"
-msgstr "<b>Error!</b> Please, check your write.\n<code>Name | Description | ID category<\code>"
+"<code>Название | Описание | Цена | ID категории</code>"
+msgstr ""
+"<b>Error!</b> Please, check your write.\n"
+"<code>Name | Description | ID category<\\code>"
 
-#: src/handlers/admin_handlers.py:186
+#: src/handlers/admin_handlers.py:190
 msgid "Произошла непредвиденная ошибка. Попробуйте снова."
 msgstr "Fatal error. Try again!"
 
