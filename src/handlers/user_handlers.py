@@ -8,7 +8,7 @@ from aiogram.utils.i18n import (gettext as _)
 from aiogram.utils.i18n import I18n
 from src.keyboards.reply_kb import create_kb
 from src.keyboards.inline_kb import get_callback_btns
-from src.database.user_operations import add_user, add_language, get_user_by_telegram_id
+from src.database.crud.user_operations import add_user, add_language, get_user_by_telegram_id
 from src.filters.chat_types import LazyText as __
 
 user_router = Router()

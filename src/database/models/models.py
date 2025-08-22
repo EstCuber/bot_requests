@@ -11,6 +11,7 @@ class Base(DeclarativeBase):
 
 
 class User(Base):
+
     __tablename__ = "telegram_users"
 
     telegram_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
@@ -19,18 +20,20 @@ class User(Base):
     role: Mapped[UserRole] = mapped_column(sqlenum(UserRole), nullable=False, default=UserRole.user)
 
 class Category(Base):
+
     __tablename__ = "categories"
 
     category_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     category_name: Mapped[str] = mapped_column(nullable=False)
     category_description: Mapped[str] = mapped_column(nullable=True)
 
-    creator_id: Mapped[int] = mapped_column(ForeignKey("users.telegram_id"))
+    creator_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.telegram_id"))
     creator: Mapped[User] = relationship()
 
     services: Mapped[list["Service"]] = relationship(back_populates="category")
 
 class Service(Base):
+
     __tablename__ = "services"
 
     service_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
@@ -38,7 +41,7 @@ class Service(Base):
     service_description: Mapped[str] = mapped_column(nullable=True)
     service_price: Mapped[int] = mapped_column(nullable=True)
 
-    creator_id: Mapped[int] = mapped_column(ForeignKey("users.telegram_id"))
+    creator_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.telegram_id"))
     creator: Mapped[User] = relationship()
 
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.category_id"))

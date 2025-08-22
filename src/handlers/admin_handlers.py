@@ -6,14 +6,14 @@ from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 import logging
 from src.core.logger import setup_logging
-from src.database.admin_operations import orm_create_category, check_category_exists, orm_create_service, \
+from src.database.crud.admin_crud_operations.common_admin_operations import orm_create_category, check_category_exists, orm_create_service, \
     check_service_exists, orm_pagination_category, orm_get_category_count
 from src.filters.chat_types import ChatTypeFilter, IsAdmin
 from aiogram.utils.i18n import (gettext as _)
 from aiogram.utils.i18n import I18n
 from src.keyboards.reply_kb import create_kb
 from src.keyboards.inline_kb import get_callback_btns, get_pagination_keyboard
-from src.database.user_operations import add_user, add_language, get_user_by_telegram_id
+from src.database.crud.user_operations import add_user, add_language, get_user_by_telegram_id
 from src.filters.chat_types import LazyText as __
 from src.states.admin_state import AdminState
 
@@ -79,14 +79,11 @@ async def create_category(message: types.Message, state: FSMContext):
 async def create_category_handler(message: types.Message, session: AsyncSession, state: FSMContext):
 
     try:
-        name, description = message.text.split(" | ")
-        name, description = name.strip(), description.strip()
-        await state.update_data(name=name, description=description)
+        category_name, category_description = message.text.split(" | ")
+        category_name_cleaned, category_description_cleaned = category_name.strip(), category_description.strip()
 
-        data = await state.get_data()
-
-        if not await check_category_exists(session=session, category_name=name):
-            await orm_create_category(session=session, data=data)
+        if not await check_category_exists(session=session, category_name=category_name):
+            await orm_create_category(session=session, category_name=category_name_cleaned, category_description=category_description_cleaned)
             await message.answer(_("Ваша категория создана, поздравляю!"))
             await state.clear()
         else:
