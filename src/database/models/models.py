@@ -9,8 +9,9 @@ class UserRole(Enum):
 class Base(DeclarativeBase):
     pass
 
+
 class User(Base):
-    __tablename__ = "clients"
+    __tablename__ = "telegram_users"
 
     telegram_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     username: Mapped[str] = mapped_column(nullable=False)
@@ -21,17 +22,24 @@ class Category(Base):
     __tablename__ = "categories"
 
     category_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(nullable=False)
-    description: Mapped[str] = mapped_column(nullable=True)
+    category_name: Mapped[str] = mapped_column(nullable=False)
+    category_description: Mapped[str] = mapped_column(nullable=True)
+
+    creator_id: Mapped[int] = mapped_column(ForeignKey("users.telegram_id"))
+    creator: Mapped[User] = relationship()
+
     services: Mapped[list["Service"]] = relationship(back_populates="category")
 
 class Service(Base):
     __tablename__ = "services"
 
     service_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(nullable=False)
-    description: Mapped[str] = mapped_column(nullable=True)
-    price: Mapped[int] = mapped_column(nullable=True)
+    service_name: Mapped[str] = mapped_column(nullable=False)
+    service_description: Mapped[str] = mapped_column(nullable=True)
+    service_price: Mapped[int] = mapped_column(nullable=True)
+
+    creator_id: Mapped[int] = mapped_column(ForeignKey("users.telegram_id"))
+    creator: Mapped[User] = relationship()
 
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.category_id"))
     category: Mapped[Category] = relationship(back_populates="services")

@@ -98,9 +98,6 @@ async def create_category_handler(message: types.Message, session: AsyncSession,
     except Exception as e:
         await message.answer(_("Попробуйте еще раз ввести название и описание!"))
 
-#TODO: продумать отдельное создание клавиатуры (создание клавиатуры которая возвращает с переводом)
-#TODO: сделать кнопку отмены создания
-
 
 @admin_router.message(StateFilter(None), or_f(Command("create_service"), __("Создать услугу")))
 async def start_create_service(message: types.Message, session: AsyncSession, state: FSMContext):
