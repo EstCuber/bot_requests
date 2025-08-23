@@ -6,14 +6,14 @@ from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 import logging
 from src.core.logger import setup_logging
-from src.database.admin_operations import orm_create_category, check_category_exists, orm_create_service, \
-    check_service_exists, orm_pagination_category, orm_get_category_count
+from src.database.crud.admin_crud_operations.category import category_crud
+from src.database.crud.admin_crud_operations.service import service_crud
 from src.filters.chat_types import ChatTypeFilter, IsAdmin
 from aiogram.utils.i18n import (gettext as _)
 from aiogram.utils.i18n import I18n
 from src.keyboards.reply_kb import create_kb
 from src.keyboards.inline_kb import get_callback_btns, get_pagination_keyboard
-from src.database.user_operations import add_user, add_language, get_user_by_telegram_id
+from src.database.crud.user_crud_operations.user_operations import add_user, add_language, get_user_by_telegram_id
 from src.filters.chat_types import LazyText as __
 from src.states.admin_state import AdminState
 
@@ -79,14 +79,16 @@ async def create_category(message: types.Message, state: FSMContext):
 async def create_category_handler(message: types.Message, session: AsyncSession, state: FSMContext):
 
     try:
-        name, description = message.text.split(" | ")
-        name, description = name.strip(), description.strip()
-        await state.update_data(name=name, description=description)
+        category_name, category_description = message.text.split(" | ")
+        category_name_cleaned, category_description_cleaned = category_name.strip(), category_description.strip()
 
-        data = await state.get_data()
+        print(category_name_cleaned, category_description_cleaned)
 
-        if not await check_category_exists(session=session, category_name=name):
-            await orm_create_category(session=session, data=data)
+        if not await category_crud.exists(session=session, name=category_name):
+            await category_crud.create(session=session,
+                                       name=category_name_cleaned,
+                                       description=category_description_cleaned,
+                                       creator_id=message.from_user.id)
             await message.answer(_("Ваша категория создана, поздравляю!"))
             await state.clear()
         else:
@@ -97,19 +99,17 @@ async def create_category_handler(message: types.Message, session: AsyncSession,
         await message.answer(_("Вы неправильно указали название и описание"))
     except Exception as e:
         await message.answer(_("Попробуйте еще раз ввести название и описание!"))
-
-#TODO: продумать отдельное создание клавиатуры (создание клавиатуры которая возвращает с переводом)
-#TODO: сделать кнопку отмены создания
+        logger.error(f"Ошибка введения описания: {e}")
 
 
 @admin_router.message(StateFilter(None), or_f(Command("create_service"), __("Создать услугу")))
 async def start_create_service(message: types.Message, session: AsyncSession, state: FSMContext):
-    categories = await orm_pagination_category(session=session, limit=10, offset=0)
+    categories = await category_crud.pagination(session=session, limit=10, skip=0)
 
     if not categories:
         return
 
-    total_categories = await orm_get_category_count(session=session)
+    total_categories = await category_crud.get_count(session=session)
     total_pages = math.ceil(total_categories / 10)
 
     category_list_text = "\n".join([f"ID: {cat.category_id} - {cat.name}" for cat in categories])
@@ -132,13 +132,13 @@ async def paginate_categories(callback: types.CallbackQuery, session: AsyncSessi
 
     page_num = int(callback.data.split("_")[-1])
     offset = (page_num - 1) * 10
-    categories = await orm_pagination_category(session=session, limit=10, offset=offset)
+    categories = await category_crud.pagination(session=session, limit=10, skip=offset)
 
     if not categories:
         await callback.answer("Категории не найдены", show_alert=True)
         return
 
-    total_categories = await orm_get_category_count(session=session)
+    total_categories = await category_crud.get_count(session=session)
     total_pages = math.ceil(total_categories / 10)
 
     category_list_text = "\n".join([f"ID: `{cat.category_id}` - {cat.name}" for cat in categories])
@@ -160,18 +160,24 @@ async def paginate_categories(callback: types.CallbackQuery, session: AsyncSessi
 async def create_service_handler(message: types.Message, session: AsyncSession, state: FSMContext):
     try:
 
-        name, description, price, category_id_str = message.text.split(" | ")
+        service_name, service_description, service_price, category_id_str = message.text.split(" | ")
 
-        name = name.strip()
-        description = description.strip()
-        category_id = int(category_id_str.strip())
-        price = int(price.strip())
+        service_name_cleaned = service_name.strip()
+        service_description_cleaned = service_description.strip()
+        category_id_cleaned = int(category_id_str.strip())
+        service_price_cleaned = int(service_price.strip())
 
-        data_to_create = {"name": name, "description": description, "price": price}
 
-        if not await check_service_exists(session=session, service_name=name, category_id=category_id):
+        if not await service_crud.exists(session=session,
+                                         name=service_name_cleaned,
+                                         category_id=category_id_cleaned):
 
-            await orm_create_service(session=session, data=data_to_create, category_id=category_id)
+            await service_crud.create(session=session,
+                                      name=service_name_cleaned,
+                                      description=service_description_cleaned,
+                                      category_id=category_id_cleaned,
+                                      price=service_price_cleaned,
+                                      creator_id=message.from_user.id)
             await message.answer(_("Услуга создана!"))
             await state.clear()
         else:
