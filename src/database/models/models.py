@@ -44,5 +44,5 @@ class Service(Base):
     creator_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.telegram_id"))
     creator: Mapped[User] = relationship()
 
-    category_id: Mapped[int] = mapped_column(ForeignKey("categories.category_id"))
+    category_id: Mapped[int] = mapped_column(ForeignKey("categories.category_id", ondelete="CASCADE"))
     category: Mapped[Category] = relationship(back_populates="services")

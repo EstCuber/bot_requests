@@ -70,9 +70,9 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
 
 @admin_router.message(StateFilter(None), or_f(Command("create_category"), __("Создать категорию")))
 async def create_category(message: types.Message, state: FSMContext):
+
     await message.answer(_("Пожалуйста, введите категорию в формате:\n"
                    "Название категории | Описание категории"))
-
     await state.set_state(AdminState.add_category)
 
 @admin_router.message(StateFilter(AdminState.add_category), F.text)
@@ -91,12 +91,14 @@ async def create_category_handler(message: types.Message, session: AsyncSession,
                                        creator_id=message.from_user.id)
             await message.answer(_("Ваша категория создана, поздравляю!"))
             await state.clear()
+
         else:
             await message.answer(_("Данная категория уже существует! Введите еще раз!"))
 
     except ValueError:
         logger.error("Пользователь ввел неправильные данные!")
         await message.answer(_("Вы неправильно указали название и описание"))
+
     except Exception as e:
         await message.answer(_("Попробуйте еще раз ввести название и описание!"))
         logger.error(f"Ошибка введения описания: {e}")
@@ -104,6 +106,7 @@ async def create_category_handler(message: types.Message, session: AsyncSession,
 
 @admin_router.message(StateFilter(None), or_f(Command("create_service"), __("Создать услугу")))
 async def start_create_service(message: types.Message, session: AsyncSession, state: FSMContext):
+
     categories = await category_crud.pagination(session=session, limit=10, skip=0)
 
     if not categories:
@@ -113,6 +116,7 @@ async def start_create_service(message: types.Message, session: AsyncSession, st
     total_pages = math.ceil(total_categories / 10)
 
     category_list_text = "\n".join([f"ID: {cat.category_id} - {cat.name}" for cat in categories])
+
     text = (
             _("Список доступных категорий (Страница 1/{total_pages}):\n\n") +
             f"{category_list_text}\n\n" +
@@ -158,6 +162,7 @@ async def paginate_categories(callback: types.CallbackQuery, session: AsyncSessi
 
 @admin_router.message(StateFilter(AdminState.add_service), F.text)
 async def create_service_handler(message: types.Message, session: AsyncSession, state: FSMContext):
+
     try:
 
         service_name, service_description, service_price, category_id_str = message.text.split(" | ")
@@ -180,6 +185,7 @@ async def create_service_handler(message: types.Message, session: AsyncSession, 
                                       creator_id=message.from_user.id)
             await message.answer(_("Услуга создана!"))
             await state.clear()
+
         else:
             await message.answer(_("Услуга уже создана, придумайте другую!."))
 
