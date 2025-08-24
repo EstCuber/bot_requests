@@ -1,13 +1,18 @@
 from aiogram import Router, types, F
 import logging
+
+from src.core.exceptions import ErrorCreateAdmin
 from src.core.logger import setup_logging
-from aiogram.filters import CommandStart, StateFilter
+from aiogram.filters import CommandStart, StateFilter, Command
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from aiogram.utils.i18n import I18n, gettext as _
+
+from src.database.crud.admin_crud_operations.common import create_admin, get_admins_list
 from src.database.crud.user_crud_operations.user_operations import get_user_by_telegram_id, add_language, add_user
 from src.keyboards.inline_kb import get_callback_btns
 from src.keyboards.reply_kb import create_kb
+from src.states.admin_state import AdminState
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -56,3 +61,22 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
 
     await callback.message.delete()
     await callback.message.answer(text, reply_markup=main_user_kb)
+
+@admin_start_router.message(StateFilter(None), Command("create_admin"))
+async def start_create_admin(message: types.Message, state: FSMContext) -> None:
+    await message.answer("Здравствуй, самый главный админ на районе. Пожалуйста, введи айди того глупца, который станет твоей новой звездой!")
+    await state.set_state(AdminState.add_admin)
+
+@admin_start_router.message(StateFilter(AdminState.add_admin), F.text)
+async def create_new_admin(message: types.Message, session: AsyncSession, state: FSMContext) -> None:
+    telegram_id = int(message.text.strip())
+    try:
+        await create_admin(session=session, telegram_id=telegram_id)
+        await message.answer(f"Админ успешно создан!")
+    except ErrorCreateAdmin as e:
+        await message.answer(f"Не удалось создать админа, ошибка {e}")
+        logger.info(f"Не удалось создать админа, ошибка {e}")
+
+    #TODO: просмотреть еще раз созданный crud, а также дополнительно обдумать логику с добавлением админов
+    # Возможно, стоит добавить пагинацию для просмотра списка админов, а также проработать логику о том, что данная команда доступна только главному админу
+    # Возможно, стоит сделать так чтобы у главного админа была другая менюшка - вообщем, надо обдумать

@@ -24,6 +24,7 @@ async def main() -> None:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     dp = Dispatcher()
+    dp.include_router(user_router)
 
     include_admin_routers(dp)
     registration_middlewares(dp)

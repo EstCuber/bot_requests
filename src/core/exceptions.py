@@ -1,0 +1,2 @@
+class ErrorCreateAdmin(Exception):
+    pass
