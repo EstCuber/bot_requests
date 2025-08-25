@@ -7,6 +7,7 @@ from aiogram.enums import ParseMode
 
 from src.common.polling import polling
 from src.common.bot_commands import setup_bot_commands
+from src.filters.chat_types import ChatTypeFilter
 from src.handlers.routers import include_admin_routers
 from src.handlers.user_handlers.user_handlers import user_router
 from src.core.settings import settings
@@ -24,6 +25,7 @@ async def main() -> None:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     dp = Dispatcher()
+    dp.message.filter(ChatTypeFilter(['private']))
     dp.include_router(user_router)
 
     include_admin_routers(dp)

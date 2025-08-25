@@ -18,27 +18,44 @@ logger = logging.getLogger(__name__)
 
 admin_category_router = Router()
 
-@admin_category_router.message(StateFilter(None), or_f(Command("create_category"), __("Создать категорию")))
-async def before_create_category(message: types.Message, state: FSMContext):
+
+@admin_category_router.message(
+    StateFilter(None),
+    or_f(Command("create_category"),
+         __("Создать категорию")))
+async def before_create_category(
+        message: types.Message,
+        state: FSMContext):
 
     await message.answer(_("Пожалуйста, введите категорию в формате:\n"
                    "Название категории | Описание категории"))
     await state.set_state(AdminState.add_category)
 
-@admin_category_router.message(StateFilter(AdminState.add_category), F.text)
-async def create_category(message: types.Message, session: AsyncSession, state: FSMContext):
+@admin_category_router.message(
+    StateFilter(AdminState.add_category),
+    F.text)
+async def create_category(
+        message: types.Message,
+        session: AsyncSession,
+        state: FSMContext):
 
     try:
-        category_name, category_description = message.text.split(" | ")
-        category_name_cleaned, category_description_cleaned = category_name.strip(), category_description.strip()
+        (category_name,
+         category_description) = message.text.split(" | ")
 
-        print(category_name_cleaned, category_description_cleaned)
+        (category_name_cleaned,
+         category_description_cleaned) = category_name.strip(), category_description.strip()
 
-        if not await category_crud.exists(session=session, name=category_name):
-            await category_crud.create(session=session,
-                                       name=category_name_cleaned,
-                                       description=category_description_cleaned,
-                                       creator_id=message.from_user.id)
+        if not await category_crud.exists(
+                session=session,
+                name=category_name):
+
+            await category_crud.create(
+                session=session,
+                name=category_name_cleaned,
+                description=category_description_cleaned,
+                creator_id=message.from_user.id)
+
             await message.answer(_("Ваша категория создана, поздравляю!"))
             await state.clear()
 
@@ -53,12 +70,19 @@ async def create_category(message: types.Message, session: AsyncSession, state: 
         await message.answer(_("Попробуйте еще раз ввести название и описание!"))
         logger.error(f"Ошибка введения описания: {e}")
 
-@admin_category_router.callback_query(StateFilter(AdminState.add_service), F.data.startswith("category_page_"))
-async def paginate_categories(callback: types.CallbackQuery, session: AsyncSession):
+@admin_category_router.callback_query(
+    StateFilter(AdminState.add_service),
+    F.data.startswith("category_page_"))
+async def paginate_categories(
+        callback: types.CallbackQuery,
+        session: AsyncSession):
 
     page_num = int(callback.data.split("_")[-1])
     offset = (page_num - 1) * 10
-    categories = await category_crud.pagination(session=session, limit=10, skip=offset)
+    categories = await category_crud.pagination(
+        session=session,
+        limit=10,
+        skip=offset)
 
     if not categories:
         await callback.answer("Категории не найдены", show_alert=True)
@@ -76,8 +100,12 @@ async def paginate_categories(callback: types.CallbackQuery, session: AsyncSessi
     )
 
     await callback.message.edit_text(
-        text.format(page_num=page_num, total_pages=total_pages),
-        reply_markup=get_pagination_keyboard(total_pages=total_pages, current_page=page_num),
+        text.format(
+            page_num=page_num,
+            total_pages=total_pages),
+        reply_markup=get_pagination_keyboard(
+            total_pages=total_pages,
+            current_page=page_num),
     )
     await callback.answer()
 

@@ -21,10 +21,20 @@ logger = logging.getLogger(__name__)
 
 admin_service_router = Router()
 
-@admin_service_router.message(StateFilter(None), or_f(Command("create_service"), __("Создать услугу")))
-async def before_create_service(message: types.Message, session: AsyncSession, state: FSMContext):
 
-    categories = await category_crud.pagination(session=session, limit=10, skip=0)
+@admin_service_router.message(
+    StateFilter(None),
+    or_f(Command("create_service"),
+         __("Создать услугу")))
+async def before_create_service(
+        message: types.Message,
+        session: AsyncSession,
+        state: FSMContext):
+
+    categories = await category_crud.pagination(
+        session=session,
+        limit=10,
+        skip=0)
 
     if not categories:
         return
@@ -41,18 +51,29 @@ async def before_create_service(message: types.Message, session: AsyncSession, s
     )
 
     await message.answer(
-        text.format(total_pages=total_pages),
-        reply_markup=get_pagination_keyboard(total_pages=total_pages, current_page=1),
+        text.format(
+            total_pages=total_pages),
+        reply_markup=get_pagination_keyboard(
+            total_pages=total_pages,
+            current_page=1),
     )
 
     await state.set_state(AdminState.add_service)
 
-@admin_service_router.message(StateFilter(AdminState.add_service), F.text)
-async def create_service(message: types.Message, session: AsyncSession, state: FSMContext):
+@admin_service_router.message(
+    StateFilter(AdminState.add_service),
+    F.text)
+async def create_service(
+        message: types.Message,
+        session: AsyncSession,
+        state: FSMContext):
 
     try:
 
-        service_name, service_description, service_price, category_id_str = message.text.split(" | ")
+        (service_name,
+         service_description,
+         service_price,
+         category_id_str) = message.text.split(" | ")
 
         service_name_cleaned = service_name.strip()
         service_description_cleaned = service_description.strip()
@@ -60,16 +81,19 @@ async def create_service(message: types.Message, session: AsyncSession, state: F
         service_price_cleaned = int(service_price.strip())
 
 
-        if not await service_crud.exists(session=session,
-                                         name=service_name_cleaned,
-                                         category_id=category_id_cleaned):
+        if not await service_crud.exists(
+                session=session,
+                name=service_name_cleaned,
+                category_id=category_id_cleaned):
 
-            await service_crud.create(session=session,
-                                      name=service_name_cleaned,
-                                      description=service_description_cleaned,
-                                      category_id=category_id_cleaned,
-                                      price=service_price_cleaned,
-                                      creator_id=message.from_user.id)
+            await service_crud.create(
+                session=session,
+                name=service_name_cleaned,
+                description=service_description_cleaned,
+                category_id=category_id_cleaned,
+                price=service_price_cleaned,
+                creator_id=message.from_user.id)
+
             await message.answer(_("Услуга создана!"))
             await state.clear()
 
