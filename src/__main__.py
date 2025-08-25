@@ -8,7 +8,8 @@ from aiogram.enums import ParseMode
 from src.common.polling import polling
 from src.common.bot_commands import setup_bot_commands
 from src.filters.chat_types import ChatTypeFilter
-from src.handlers.routers import include_admin_routers, include_user_routers
+from src.handlers.admin_handlers.routers import include_admin_routers
+from src.handlers.user_handlers.routers import include_user_routers
 from src.core.settings import settings
 from src.core.logger import setup_logging
 

@@ -9,9 +9,9 @@ from src.filters.chat_types import LazyText as __
 setup_logging()
 logger = logging.getLogger(__name__)
 
-work_with_users_router = Router()
+interaction_with_user_router = Router()
 
-@work_with_users_router.message(
+@interaction_with_user_router.message(
     F.reply_to_message,
     F.reply_to_message.forward_from
 )

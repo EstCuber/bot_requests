@@ -18,9 +18,9 @@ logger = logging.getLogger(__name__)
 from src.database.crud.admin_crud_operations.common import create_admin, get_admins_list
 from src.states.admin_state import AdminState
 
-work_with_admins_router = Router()
+admin_interaction_router = Router()
 
-@work_with_admins_router.message(
+@admin_interaction_router.message(
     StateFilter(None),
     Command("create_admin"))
 async def start_create_admin(
@@ -31,7 +31,7 @@ async def start_create_admin(
                            "Пожалуйста, введи айди того глупца, который станет твоей новой звездой!"))
     await state.set_state(AdminState.add_admin)
 
-@work_with_admins_router.message(
+@admin_interaction_router.message(
     StateFilter(AdminState.add_admin),
     F.text,
     F.message.from_user.id == settings.ADMIN_ID)
