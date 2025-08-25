@@ -8,7 +8,7 @@ from aiogram.enums import ParseMode
 from src.common.polling import polling
 from src.common.bot_commands import setup_bot_commands
 from src.handlers.routers import include_admin_routers
-from src.handlers.user_handlers import user_router
+from src.handlers.user_handlers.user_handlers import user_router
 from src.core.settings import settings
 from src.core.logger import setup_logging
 

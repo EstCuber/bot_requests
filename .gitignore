@@ -4,3 +4,4 @@ __pycache__
 .vscode
 .venv
 bot.log
+.DS_Store

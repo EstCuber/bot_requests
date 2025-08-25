@@ -80,3 +80,4 @@ async def paginate_categories(callback: types.CallbackQuery, session: AsyncSessi
         reply_markup=get_pagination_keyboard(total_pages=total_pages, current_page=page_num),
     )
     await callback.answer()
+

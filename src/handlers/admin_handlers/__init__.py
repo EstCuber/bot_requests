@@ -1,3 +1,4 @@
-from src.handlers.admin_handlers.start_handlers import admin_start_router
-from src.handlers.admin_handlers.service_handlers import admin_service_router
-from src.handlers.admin_handlers.category_handlers import admin_category_router
+from src.handlers.admin_handlers.common_handlers.start_handlers import admin_start_router
+from src.handlers.admin_handlers.work_handlers.service_handlers import admin_service_router
+from src.handlers.admin_handlers.work_handlers.category_handlers import admin_category_router
+from src.handlers.admin_handlers.common_handlers.work_with_admins_handlers import work_with_admins_router
