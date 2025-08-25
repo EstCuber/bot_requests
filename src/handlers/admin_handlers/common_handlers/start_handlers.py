@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from aiogram.utils.i18n import I18n, gettext as _
 
 from src.database.crud.user_crud_operations.user_operations import get_user_by_telegram_id, add_language, add_user
+from src.filters.chat_types import IsAdmin
 from src.keyboards.inline_kb import get_callback_btns
 from src.keyboards.reply_kb import create_kb
 
@@ -15,7 +16,7 @@ setup_logging()
 logger = logging.getLogger(__name__)
 admin_start_router = Router()
 
-@admin_start_router.message(CommandStart())
+@admin_start_router.message(CommandStart(), IsAdmin())
 async def admin_cmd_start(message: types.Message, session: AsyncSession) -> None:
     user = await get_user_by_telegram_id(session=session, telegram_id=int(message.from_user.id))
 
@@ -35,7 +36,6 @@ async def admin_cmd_start(message: types.Message, session: AsyncSession) -> None
         await message.answer(text=text, reply_markup=create_kb(
         _("Создать категорию", locale=user.language),
         _("Создать услугу", locale=user.language),
-        _("Поддержка", locale=user.language),
         sizes=(2, 1)
     ))
 @admin_start_router.callback_query(StateFilter(None), F.data.startswith("_"))
@@ -52,7 +52,6 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
     main_user_kb = create_kb(
         i18n.gettext("Создать категорию", locale=lang),
         i18n.gettext("Создать услугу", locale=lang),
-        i18n.gettext("Поддержка", locale=lang),
         sizes=(2, 1)
     )
 

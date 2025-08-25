@@ -20,17 +20,33 @@ from src.states.admin_state import AdminState
 
 work_with_admins_router = Router()
 
-@work_with_admins_router.message(StateFilter(None), Command("create_admin"))
-async def start_create_admin(message: types.Message, state: FSMContext) -> None:
-    await message.answer(_("Здравствуй, самый главный админ на районе. Пожалуйста, введи айди того глупца, который станет твоей новой звездой!"))
+@work_with_admins_router.message(
+    StateFilter(None),
+    Command("create_admin"))
+async def start_create_admin(
+        message: types.Message,
+        state: FSMContext) -> None:
+
+    await message.answer(_("Здравствуй, самый главный админ на районе. "
+                           "Пожалуйста, введи айди того глупца, который станет твоей новой звездой!"))
     await state.set_state(AdminState.add_admin)
 
-@work_with_admins_router.message(StateFilter(AdminState.add_admin), F.text, F.message.from_user.id == settings.ADMIN_ID)
-async def create_new_admin(message: types.Message, session: AsyncSession, state: FSMContext) -> None:
+@work_with_admins_router.message(
+    StateFilter(AdminState.add_admin),
+    F.text,
+    F.message.from_user.id == settings.ADMIN_ID)
+async def create_new_admin(
+        message: types.Message,
+        session: AsyncSession,
+        state: FSMContext) -> None:
+
     telegram_id = int(message.text.strip())
+
     try:
         await create_admin(session=session, telegram_id=telegram_id)
         await message.answer(_("Админ успешно создан!"))
+        await state.clear()
+
     except ErrorCreateAdmin as e:
         await message.answer(_("Не удалось создать админа, ошибка {}").format(e))
         logger.info(f"Не удалось создать админа, ошибка {e}")

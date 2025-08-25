@@ -8,8 +8,7 @@ from aiogram.enums import ParseMode
 from src.common.polling import polling
 from src.common.bot_commands import setup_bot_commands
 from src.filters.chat_types import ChatTypeFilter
-from src.handlers.routers import include_admin_routers
-from src.handlers.user_handlers.user_handlers import user_router
+from src.handlers.routers import include_admin_routers, include_user_routers
 from src.core.settings import settings
 from src.core.logger import setup_logging
 
@@ -26,10 +25,10 @@ async def main() -> None:
 
     dp = Dispatcher()
     dp.message.filter(ChatTypeFilter(['private']))
-    dp.include_router(user_router)
 
-    include_admin_routers(dp)
     registration_middlewares(dp)
+    include_admin_routers(dp)
+    include_user_routers(dp)
     await setup_bot_commands(bot)
     await polling(dp, bot)
 

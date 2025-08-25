@@ -8,12 +8,12 @@ from aiogram.utils.i18n import I18n
 from src.keyboards.reply_kb import create_kb
 from src.keyboards.inline_kb import get_callback_btns
 from src.database.crud.user_crud_operations.user_operations import add_user, add_language, get_user_by_telegram_id
-from src.filters.chat_types import LazyText as __
+from src.filters.chat_types import LazyText as __, IsAdmin
 
 start_user_router = Router()
 
 
-@start_user_router.message(CommandStart())
+@start_user_router.message(CommandStart(), ~IsAdmin())
 async def cmd_start(message: types.Message, session: AsyncSession) -> None:
     user = await get_user_by_telegram_id(session=session, telegram_id=int(message.from_user.id))
 
@@ -36,7 +36,7 @@ async def cmd_start(message: types.Message, session: AsyncSession) -> None:
         _("Поддержка", locale=user.language),
         sizes=(2, 1)
     ))
-@user_router.callback_query(StateFilter(None), F.data.startswith("_"))
+@start_user_router.callback_query(StateFilter(None), F.data.startswith("_"))
 async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I18n, session: AsyncSession) -> None:
     lang = callback.data.split("_")[-1]
     await state.update_data(locale=lang)

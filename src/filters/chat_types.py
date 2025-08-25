@@ -5,7 +5,6 @@ from aiogram import types
 from aiogram.utils.i18n import I18n
 
 from src.core.settings import settings
-from src.database.crud.admin_crud_operations.common import get_admins_list
 from src.database.models.models import User, UserRole
 
 
