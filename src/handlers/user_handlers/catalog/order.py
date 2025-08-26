@@ -11,8 +11,12 @@ from src.states.user_state import UserState
 
 order_router = Router()
 
-# @order_router.message(or_f(Command("order"), __("Заказ")))
-# async def
+@order_router.message(or_f(Command("order"), __("Заказ")))
+async def start_order(message: types.Message, state: FSMContext) -> None:
+    await message.answer("Чтобы заказать, вам необходимо выбрать из предложенных вариантов категории")
+
+    # здесь будут кнопки на пагинации,
+    # т.е, будет 10 возможных кнопок, две из которых - вперед и назад.
 
 @order_router.message(or_f(Command("current_order"), __("Состояние текущего заказа")))
 async def current_order_handler(message: types.Message) -> None:

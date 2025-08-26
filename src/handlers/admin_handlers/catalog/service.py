@@ -1,3 +1,4 @@
+import asyncio
 import math
 
 from aiogram import Router, types, F
@@ -12,7 +13,7 @@ from src.database.crud.admin_crud_operations.service import service_crud
 from src.filters.chat_types import LazyText as __
 
 from src.database.crud.admin_crud_operations.category import category_crud
-from src.keyboards.inline_kb import get_pagination_keyboard
+from src.keyboards.inline_kb import get_pagination_keyboard, get_callback_btns
 from src.states.admin_state import AdminState
 
 
@@ -37,8 +38,10 @@ async def before_create_service(
         skip=0)
 
     if not categories:
+        await message.answer("Простите, нет доступных категорий!")
         return
 
+    await message.answer("Категории присутствуют, Вы можете создать сервис!", reply_markup=get_callback_btns(btns={_("отмена"): "_cancel"}))
     total_categories = await category_crud.get_count(session=session)
     total_pages = math.ceil(total_categories / 10)
 
@@ -59,6 +62,21 @@ async def before_create_service(
     )
 
     await state.set_state(AdminState.add_service)
+
+@admin_service_router.callback_query(
+    StateFilter(AdminState.add_service),
+    F.data.startswith("_cancel")
+)
+async def cancel_service_creation(
+        callback: types.CallbackQuery,
+        state: FSMContext
+) -> None:
+    await callback.answer(_("Произошла отмена создания сервиса!"))
+    await state.clear()
+
+    await asyncio.sleep(1.5)
+    await callback.message.delete()
+
 
 @admin_service_router.message(
     StateFilter(AdminState.add_service),

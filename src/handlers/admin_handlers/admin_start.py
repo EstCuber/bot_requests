@@ -2,7 +2,7 @@ from aiogram import Router, types, F
 import logging
 
 from src.core.logger import setup_logging
-from aiogram.filters import CommandStart, StateFilter
+from aiogram.filters import CommandStart, StateFilter, or_f
 from aiogram.fsm.context import FSMContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from aiogram.utils.i18n import I18n, gettext as _
@@ -38,7 +38,13 @@ async def admin_cmd_start(message: types.Message, session: AsyncSession) -> None
         _("Создать услугу", locale=user.language),
         sizes=(2, 1)
     ))
-@admin_start_router.callback_query(StateFilter(None), F.data.startswith("_"))
+@admin_start_router.callback_query(
+    StateFilter(None),
+    or_f(
+        F.data.startswith("_ru"),
+         F.data.startswith("_en")
+    )
+)
 async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I18n, session: AsyncSession) -> None:
     lang = callback.data.split("_")[-1]
     await state.update_data(locale=lang)

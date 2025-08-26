@@ -1,3 +1,4 @@
+import asyncio
 import math
 
 from aiogram import Router, types, F
@@ -10,7 +11,7 @@ from aiogram.utils.i18n import I18n, gettext as _
 from src.filters.chat_types import LazyText as __
 
 from src.database.crud.admin_crud_operations.category import category_crud
-from src.keyboards.inline_kb import get_pagination_keyboard
+from src.keyboards.inline_kb import get_pagination_keyboard, get_callback_btns
 from src.states.admin_state import AdminState
 
 setup_logging()
@@ -28,8 +29,19 @@ async def before_create_category(
         state: FSMContext):
 
     await message.answer(_("Пожалуйста, введите категорию в формате:\n"
-                   "Название категории | Описание категории"))
+                   "Название категории | Описание категории"), reply_markup=get_callback_btns(btns={_("отмена"): "_cancel"}))
     await state.set_state(AdminState.add_category)
+
+@admin_category_router.callback_query(
+    StateFilter(AdminState.add_category),
+    F.data.startswith("_cancel")
+)
+async def cancel_category_creation(callback: types.CallbackQuery, state: FSMContext):
+    await callback.answer(_("Произошла отмена создания категории!"))
+    await state.clear()
+
+    await asyncio.sleep(1.5)
+    await callback.message.delete()
 
 @admin_category_router.message(
     StateFilter(AdminState.add_category),
