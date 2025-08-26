@@ -27,7 +27,7 @@ class Category(Base):
     name: Mapped[str] = mapped_column(nullable=False)
     description: Mapped[str] = mapped_column(nullable=True)
 
-    creator_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.telegram_id"))
+    creator_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.telegram_id", ondelete="CASCADE"))
     creator: Mapped[User] = relationship()
 
     services: Mapped[list["Service"]] = relationship(back_populates="category")
@@ -44,5 +44,5 @@ class Service(Base):
     creator_id: Mapped[int] = mapped_column(ForeignKey("telegram_users.telegram_id"))
     creator: Mapped[User] = relationship()
 
-    category_id: Mapped[int] = mapped_column(ForeignKey("categories.category_id"))
+    category_id: Mapped[int] = mapped_column(ForeignKey("categories.category_id", ondelete="CASCADE"))
     category: Mapped[Category] = relationship(back_populates="services")
