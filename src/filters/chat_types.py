@@ -27,6 +27,7 @@ class IsAdmin(Filter):
         elif not db_user:
             return False
 
+        print(f"{db_user.role}, {db_user}: admin")
         return db_user.role == UserRole.admin
 
 

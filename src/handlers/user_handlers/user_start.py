@@ -34,6 +34,7 @@ async def cmd_start(message: types.Message, session: AsyncSession) -> None:
         _("Информация", locale=user.language),
         _("Состояние текущего заказа", locale=user.language),
         _("Поддержка", locale=user.language),
+            _("Заказ", locale=user.language),
         sizes=(2, 1)
     ))
 @start_user_router.callback_query(StateFilter(None), F.data.startswith("_"))
@@ -55,6 +56,7 @@ async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I1
         i18n.gettext("Информация", locale=lang),
         i18n.gettext("Состояние текущего заказа", locale=lang),
         i18n.gettext("Поддержка", locale=lang),
+        i18n.gettext("Заказ", locale=lang),
         sizes=(2, 1)
     )
 

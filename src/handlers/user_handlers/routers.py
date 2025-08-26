@@ -6,6 +6,7 @@ from src.filters.chat_types import IsAdmin
 
 user_router = Router()
 user_router.message.filter(~IsAdmin())
+user_router.callback_query.filter(~IsAdmin())
 
 user_router.include_routers(
     start_user_router,
