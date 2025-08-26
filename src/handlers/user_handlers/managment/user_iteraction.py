@@ -9,18 +9,9 @@ from src.core.settings import settings
 from src.filters.chat_types import LazyText as __
 from src.states.user_state import UserState
 
-main_menu_router = Router()
+user_iteraction_router = Router()
 
-
-@main_menu_router.message(or_f(Command("info"), __("Информация")))
-async def info_handler(message: types.Message) -> None:
-    await message.answer("Здесь будет информация")
-
-@main_menu_router.message(or_f(Command("current_order"), __("Состояние текущего заказа")))
-async def current_order_handler(message: types.Message) -> None:
-    await message.answer("Здесь будет состояние текущего заказа")
-
-@main_menu_router.message(
+@user_iteraction_router.message(
     StateFilter(None),
     or_f(Command("help"),
      __("Поддержка")))
@@ -33,7 +24,7 @@ async def help_handler(
                            "\n<blockquote>Настройки -> Конфиденциальность -> Пересылка сообщений -> Кто может добавлять ссылку на мой аккаунт при пересылке моих сообщений?</blockquote>"))
     await state.set_state(UserState.question_state)
 
-@main_menu_router.message(
+@user_iteraction_router.message(
     StateFilter(UserState.question_state),
     F.text)
 async def send_question_from_user(
