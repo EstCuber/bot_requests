@@ -71,11 +71,10 @@ async def cancel_service_creation(
         callback: types.CallbackQuery,
         state: FSMContext
 ) -> None:
-    await callback.answer(_("Произошла отмена создания сервиса!"))
     await state.clear()
 
     await asyncio.sleep(1.5)
-    await callback.message.delete()
+    await callback.message.edit_text("Отменено!")
 
 
 @admin_service_router.message(

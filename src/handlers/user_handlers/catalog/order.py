@@ -15,8 +15,18 @@ from src.keyboards.inline_kb import get_pagination_keyboard
 
 order_router = Router()
 
-@order_router.message(or_f(Command("order"), __("Заказ")))
-async def start_order(message: types.Message, state: FSMContext, session: AsyncSession) -> None:
+@order_router.message(
+    or_f(
+        Command("order"),
+        __("Заказ")
+    )
+)
+async def start_order(
+        message: types.Message,
+        state: FSMContext,
+        session: AsyncSession
+) -> None:
+
     await message.answer("Чтобы заказать, вам необходимо выбрать из предложенных вариантов категории")
 
     categories = await category_crud.pagination(
@@ -44,7 +54,12 @@ async def start_order(message: types.Message, state: FSMContext, session: AsyncS
     )
     #TODO: дореализовать функцию до конца!
 
-@order_router.message(or_f(Command("current_order"), __("Состояние текущего заказа")))
+@order_router.message(
+    or_f(
+        Command("current_order"),
+        __("Состояние текущего заказа")
+    )
+)
 async def current_order_handler(message: types.Message) -> None:
     await message.answer("Здесь будет состояние текущего заказа")
 

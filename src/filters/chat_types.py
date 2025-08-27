@@ -9,8 +9,10 @@ from src.database.models.models import User, UserRole
 
 
 class ChatTypeFilter(Filter):
-    """Фильтр для проверки типа чата:
-    private, group, supergroup, channel < доступные типы"""
+    """
+    Фильтр для проверки типа чата:
+    private, group, supergroup, channel < доступные типы
+    """
     def __init__(self, chat_types: list[str]) -> None:
         self.chat_types = chat_types
 
@@ -18,6 +20,11 @@ class ChatTypeFilter(Filter):
         return message.chat.type in self.chat_types
 
 class IsAdmin(Filter):
+    """
+    фильтр, который проверяет главного админа (достает из settings),
+    ИЛИ проверяет роль юзера из дб на то - является ли он админом
+    DataBaseSession -> IsAdmin. Данная последовательность важна, потому что именно данный outer middleware дает ему db_user
+    """
     def __init__(self) -> None:
         pass
 
@@ -27,11 +34,21 @@ class IsAdmin(Filter):
         elif not db_user:
             return False
 
-        print(f"{db_user.role}, {db_user}: admin")
         return db_user.role == UserRole.admin
 
 
 class LazyText(Filter):
+    """
+    Небольшой костыль, созданный для lazytext в i18n.
+    Переводит под язык пользователя handlers с командами, пример:
+
+    @<some_router>.message(or_f(Command(/exit), __("Выход")))
+    async def __<function>(<parameters>):
+        <your_code>
+
+    Данный компонент необходим для работы кода, иначе я не смог придумать как сделать так, чтобы не поднималась ошибка,
+    обычный lazy_text у меня не работает или я не понимаю как он должен работать
+    """
     def __init__(self, text: str, ignore_case: bool = True) -> None:
         self.text = text
         self.ignore_case = ignore_case
