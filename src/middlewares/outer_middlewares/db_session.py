@@ -8,6 +8,10 @@ from src.database.crud.user_crud_operations.user_operations import get_user_by_t
 
 
 class DataBaseSession(BaseMiddleware):
+    """
+    Создает сессию для работы с бд
+    Также создает db_user, необходимый для проверки IsAdmin на явление админом.
+    """
     def __init__(self, session_pool: async_sessionmaker):
         self.session_pool = session_pool
 

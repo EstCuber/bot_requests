@@ -9,6 +9,9 @@ from src.database.crud.user_crud_operations.user_operations import get_user_by_t
 
 
 class LanguageMiddleware(BaseMiddleware):
+    """
+    Берет язык юзера из бд и добавляет их к переводу
+    """
     def __init__(self, session_pool: async_sessionmaker):
         self.session_pool = session_pool
 

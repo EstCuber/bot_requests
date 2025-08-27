@@ -4,4 +4,4 @@ from src.database.models.models import Category
 class CRUDCategory(CRUDBaseTasks[Category]):
     pass
 
-category_crud = CRUDCategory(Category)
+category_crud = CRUDCategory(Category) # объект класса Category для работы с категориями

@@ -25,8 +25,10 @@ async def main() -> None:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     dp = Dispatcher()
-    dp.message.filter(ChatTypeFilter(['private']))
+    dp.message.filter(ChatTypeFilter(['private'])) # фильтруем всего бота на доступ только к личному чату
 
+
+    # старт самого бота
     registration_middlewares(dp)
     include_admin_routers(dp)
     include_user_routers(dp)
