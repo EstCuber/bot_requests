@@ -45,7 +45,12 @@ async def admin_cmd_start(message: types.Message, session: AsyncSession) -> None
          F.data.startswith("_en")
     )
 )
-async def choose_lang(callback: types.CallbackQuery, state: FSMContext, i18n: I18n, session: AsyncSession) -> None:
+async def choose_lang(
+        callback: types.CallbackQuery,
+        state: FSMContext,
+        i18n: I18n,
+        session: AsyncSession
+) -> None:
     lang = callback.data.split("_")[-1]
     await state.update_data(locale=lang)
 
