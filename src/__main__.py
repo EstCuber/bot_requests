@@ -13,15 +13,15 @@ from src.handlers.user_handlers.routers import include_user_routers
 from src.core.settings import settings
 from src.core.logger import setup_logging
 
-from src.middlewares.registration import registration_middlewares
+from src.middlewares.registration import register_middlewares
 
 setup_logging()
 logger = logging.getLogger(__name__)
 
-async def main() -> None:
+async def main(bot_id) -> None:
 
     bot = Bot(
-        token=settings.BOT_TOKEN,
+        token=bot_id,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
     dp = Dispatcher()
@@ -29,7 +29,7 @@ async def main() -> None:
 
 
     # старт самого бота
-    registration_middlewares(dp)
+    register_middlewares(dp)
     include_admin_routers(dp)
     include_user_routers(dp)
     await setup_bot_commands(bot)
@@ -37,6 +37,6 @@ async def main() -> None:
 
 if __name__ == '__main__':
     try:
-        asyncio.run(main())
+        asyncio.run(main(settings.BOT_TOKEN))
     except Exception as e:
         logger.critical(f"Совершена критическая ошибка при запуске. Ошибка: {e}")

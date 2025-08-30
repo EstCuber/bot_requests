@@ -1,7 +1,11 @@
+
 from typing import Any, Generic, Type, TypeVar
+
 from sqlalchemy import func, select, inspect
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from src.database.models.models import Base
+
 
 ModelType = TypeVar("ModelType", bound=Base)
 
@@ -79,3 +83,17 @@ class CRUDBaseTasks(Generic[ModelType]):
         )
         result = await session.execute(stmt)
         return result.scalar_one()
+
+    async def delete_object(
+            self,
+            session: AsyncSession,
+            **kwargs
+    ) -> bool:
+        """Delete object"""
+        db_object = await self.get_one(session, **kwargs)
+
+        if db_object:
+            await session.delete(db_object)
+            await session.commit()
+            return True
+        return False

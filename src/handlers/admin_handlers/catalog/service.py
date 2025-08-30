@@ -3,6 +3,8 @@ import math
 
 from aiogram import Router, types, F
 import logging
+
+from src.callback_data.user import CategoryPageCallbackData
 from src.core.logger import setup_logging
 from aiogram.filters import Command, StateFilter, or_f
 from aiogram.fsm.context import FSMContext
@@ -13,6 +15,7 @@ from src.database.crud.admin_crud_operations.service import service_crud
 from src.filters.chat_types import LazyText as __
 
 from src.database.crud.admin_crud_operations.category import category_crud
+from src.handlers.admin_handlers.common.pagination_helper import page_callback
 from src.keyboards.inline_kb import get_pagination_keyboard, get_callback_btns
 from src.states.admin_state import AdminState
 
@@ -125,3 +128,27 @@ async def create_service(
     except Exception as e:
         logger.error(f"Неизвестная ошибка при создании сервиса: {e}")
         await message.answer(_("Произошла непредвиденная ошибка. Попробуйте снова."))
+
+@admin_service_router.callback_query(
+    StateFilter(AdminState.add_service),
+    CategoryPageCallbackData.filter())
+async def page_handler(call: types.CallbackQuery,
+                       session: AsyncSession,
+                       callback_data: CategoryPageCallbackData) -> None:
+    text_template = _(
+        "Список доступных категорий (Страница {current_page}/{total_pages}):\n\n"
+        "{item_list}\n\n"
+        "Выберите айди категории в формате! Название | Описание | Цена | ID категории"
+    )
+
+    def format_category(item):
+        return f"ID: {item.category_id} - {item.name}"
+
+    await page_callback(
+        call=call,
+        callback_data=callback_data,
+        session=session,
+        crud_manager=category_crud,
+        item_formatter=format_category,
+        base_text=text_template
+    )

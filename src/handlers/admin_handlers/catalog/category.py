@@ -3,6 +3,8 @@ import math
 
 from aiogram import Router, types, F
 import logging
+
+from src.callback_data.user import CategoryPageCallbackData
 from src.core.logger import setup_logging
 from aiogram.filters import Command, StateFilter, or_f
 from aiogram.fsm.context import FSMContext
@@ -11,6 +13,7 @@ from aiogram.utils.i18n import I18n, gettext as _
 from src.filters.chat_types import LazyText as __
 
 from src.database.crud.admin_crud_operations.category import category_crud
+from src.handlers.admin_handlers.common.pagination_helper import page_callback
 from src.keyboards.inline_kb import get_pagination_keyboard, get_callback_btns
 from src.states.admin_state import AdminState
 
@@ -82,42 +85,4 @@ async def create_category(
         await message.answer(_("Попробуйте еще раз ввести название и описание!"))
         logger.error(f"Ошибка введения описания: {e}")
 
-@admin_category_router.callback_query(
-    StateFilter(AdminState.add_service),
-    F.data.startswith("category_page_"))
-async def paginate_categories(
-        callback: types.CallbackQuery,
-        session: AsyncSession):
-
-    page_num = int(callback.data.split("_")[-1])
-    offset = (page_num - 1) * 10
-    categories = await category_crud.pagination(
-        session=session,
-        limit=10,
-        skip=offset)
-
-    if not categories:
-        await callback.answer("Категории не найдены", show_alert=True)
-        return
-
-    total_categories = await category_crud.get_count(session=session)
-    total_pages = math.ceil(total_categories / 10)
-
-    category_list_text = "\n".join([f"ID: `{cat.category_id}` - {cat.name}" for cat in categories])
-
-    text = (
-            _("Список доступных категорий (Страница {page_num}/{total_pages}):\n\n") +
-            f"{category_list_text}\n\n" +
-            _("Пожалуйста, введите сервис в формате:\nНазвание | Описание | Цена | ID категории")
-    )
-
-    await callback.message.edit_text(
-        text.format(
-            page_num=page_num,
-            total_pages=total_pages),
-        reply_markup=get_pagination_keyboard(
-            total_pages=total_pages,
-            current_page=page_num),
-    )
-    await callback.answer()
 
